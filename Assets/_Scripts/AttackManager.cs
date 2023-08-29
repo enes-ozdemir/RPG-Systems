@@ -1,54 +1,38 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using _Scripts.Data;
-using _Scripts.TurnSystem;
-using UnityEngine;
+using DG.Tweening;
 
 namespace _Scripts
 {
-    public class AttackManager : MonoBehaviour
+    public class AttackManager
     {
-        private Player _player;
-        private Enemy _enemy;
-
-        [SerializeField] private TurnManager _turnManager;
-
-        private void Start()
+        private readonly Character _attacker;
+        private readonly Character _target;
+        
+        public AttackManager(Character attacker,Character target)
         {
-            _player = _turnManager._player;
-            _enemy = _turnManager._enemies[0];
+            _attacker = attacker;
+            _target = target;
+        }
+        
+        public Action onAttackEnd;
+
+        public async Task PerformAttack(AttackType attackType)
+        {
+            await PerformAttackWithAnimation(attackType);
         }
 
-        public async Task<bool> PerformAttack(AttackType attackType, Character target = null)
+        private async Task PerformAttackWithAnimation(AttackType attackType)
         {
-            target ??= _enemy;
-
-            if (target is Enemy)
-            {
-                Debug.Log("Waiting for player attack");
-                await PerformPlayerAttack(_player, target, attackType);
-                Debug.Log("After waiting for player attack");
-            }
-            else
-            {
-                await PerformEnemyAttack(_enemy, target, attackType);
-            }
-
-            return true;
-        }
-
-
-        private async Task PerformPlayerAttack(Character attacker, Character target, AttackType attackType)
-        {
-            attacker.Attack(target, attackType);
-            await Task.Delay(2000);
-            _turnManager.onTurnEnd?.Invoke();
-        }
-
-        private async Task PerformEnemyAttack(Character attacker, Character target, AttackType attackType)
-        {
-            attacker.Attack(target, attackType);
-            await Task.Delay(5000);
-            _turnManager.onTurnEnd?.Invoke();
+            var position = _attacker.attackPos.position;
+            _attacker.transform.DOMove(position, 0.3f);
+            await Task.Delay(300);
+            await _attacker.Attack(_target, attackType);
+            await Task.Delay(500);
+            _attacker.transform.DOMove(_attacker.originalPos, 0.3f);
+            await Task.Delay(300);
+            onAttackEnd?.Invoke();
         }
     }
 }

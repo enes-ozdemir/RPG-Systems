@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using _Scripts.Data;
 using UnityEngine;
@@ -8,8 +9,6 @@ namespace _Scripts.TurnSystem
     public class TurnManager : MonoBehaviour
     {
         private int _currentTurn;
-        public Enemy[] _enemies;
-
         public Action onPlayerTurnStart;
         public Action onEnemyTurnStart;
         public Action onGameOver;
@@ -18,59 +17,76 @@ namespace _Scripts.TurnSystem
         public Action onTurnStart;
 
         public Player _player;
+        public List<Enemy> enemies;
+        public Enemy currentEnemy;
         private int _turnIndex;
+
+        private AttackManager _playerAttackManager;
+        private AttackManager _enemyAttackManager;
+        private TaskCompletionSource<bool> _playerActionTcs;
 
         private void OnEnable()
         {
-            onTurnEnd+=NextTurn;
+            _playerAttackManager.onAttackEnd += NextTurn;
+            _enemyAttackManager.onAttackEnd += NextTurn;
+        }
+
+        private void OnDisable()
+        {
+            _playerAttackManager.onAttackEnd -= NextTurn;
+            _enemyAttackManager.onAttackEnd -= NextTurn;
         }
 
         private void Awake()
         {
-            _player = new Player("Enca", 1, new Stats(10000
-                , 10, 10, 10, 10
-                , 10), new Ability[0]);
-            var enemy = new Enemy("Enemy, 1", 1, new Stats(10000
-                , 10, 10, 10, 10
-                , 10), new Ability[0]);
+            currentEnemy = enemies[0];
+            _player.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10), null);
+            currentEnemy.SetCharacter("Enemy", 100, new Stats(100, 10, 10, 10, 10, 10), null);
+            _playerAttackManager = new AttackManager(_player, currentEnemy); //todo next enemye geçince değiş
+            _enemyAttackManager = new AttackManager(currentEnemy, _player); //todo next enemye geçince değiş
+        }
 
-            _enemies = new Enemy[1];
-            _enemies[0] = enemy;
-            
+        private void Start()
+        {
+            _player.PlayAnimation(AnimationType.Idle);
+            currentEnemy.PlayAnimation(AnimationType.Idle);
+
 
             StartTurn();
             _currentTurn = 0;
             onGameStart.Invoke();
         }
 
-        private void StartTurn()
+        private async Task StartTurn()
         {
             onTurnStart?.Invoke();
 
             if (_turnIndex == 0)
             {
                 Debug.Log("Player Turn");
-                SetPlayerTurn();
+                await SetPlayerTurn();
             }
             else if (_turnIndex == 1)
             {
                 Debug.Log("Enemy Turn");
-                SetEnemyTurn();
+                await SetEnemyTurn();
             }
         }
 
-        private void NextTurn()
+        private async void NextTurn()
         {
+           onTurnEnd?.Invoke();
+            
             _currentTurn++;
 
-            if (_player.IsDead() || _enemies[0].IsDead())
+            if (_player.IsDead() || enemies[0].IsDead())
             {
                 EndGame();
                 return;
             }
 
             IncreaseTurnIndex();
-            StartTurn();
+            await StartTurn();
         }
 
         private void IncreaseTurnIndex()
@@ -87,18 +103,33 @@ namespace _Scripts.TurnSystem
             Debug.Log("Game Over!"); // Example: Log a game over message
         }
 
-        private void SetPlayerTurn()
+
+        private async Task SetPlayerTurn()
         {
             onPlayerTurnStart.Invoke();
-            // This method could be responsible for enabling player controls, displaying UI elements for the player's turn, etc.
-            //  _characters[_currentTurn].EnableControls(); // Example: Enable the player's controls
+    
+            _playerActionTcs = new TaskCompletionSource<bool>();
+    
+            // Enable any UI buttons or controls, and wire up their 'onClick' to call `PlayerActionTaken()`
+            Debug.Log("wait for player input");
+
+            await _playerActionTcs.Task;
+
+            Debug.Log("Player Turn End");
+            // Continue with your code
+        }
+
+        public async Task PlayerActionTaken(AttackType attackType)
+        {
+            // Disable any UI buttons or controls
+            await _playerAttackManager.PerformAttack(attackType);
+            _playerActionTcs.SetResult(true);
         }
 
         private async Task SetEnemyTurn()
         {
             onEnemyTurnStart.Invoke();
-            await _enemies[0].Attack(_player, AttackType.LowAttack);
-            NextTurn();
+            await _enemyAttackManager.PerformAttack(AttackType.LowAttack);
 
             // This method could handle the logic for an enemy's turn, such as triggering AI behaviors.
             // _characters[_currentTurn].PerformAIAction(); // Example: Trigger an AI action for the enemy

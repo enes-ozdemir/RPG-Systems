@@ -621,6 +621,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnManager: {fileID: 883117825}
+  turnText: {fileID: 1987664954}
+  fightUI: {fileID: 415805789}
 --- !u!1 &297284936
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,7 +862,7 @@ GameObject:
   - component: {fileID: 415805790}
   - component: {fileID: 415805791}
   m_Layer: 0
-  m_Name: F'ght
+  m_Name: FightUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,6 +1011,37 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &518158786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518158787}
+  m_Layer: 0
+  m_Name: EnemyAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &518158787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518158786}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.84, y: -10.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1853136273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,7 +1621,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 697688338}
-  - component: {fileID: 697688337}
   m_Layer: 0
   m_Name: AttackManager
   m_TagString: Untagged
@@ -1596,19 +1628,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &697688337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697688336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db06de26b99465080285dab94bdb84c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _turnManager: {fileID: 883117825}
 --- !u!4 &697688338
 Transform:
   m_ObjectHideFlags: 0
@@ -1730,7 +1749,6 @@ MonoBehaviour:
   _isActive: 1
   duration: 0.5
   _uiManager: {fileID: 266240827}
-  _attackManager: {fileID: 697688337}
   meleeAttackType: 0
 --- !u!114 &718522802
 MonoBehaviour:
@@ -1966,6 +1984,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe123f0f69e34dbd9b55f260f8ff7654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 1101574026}
+  enemies:
+  - {fileID: 1257518460}
+  currentEnemy: {fileID: 0}
 --- !u!1 &901627638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,14 +2357,24 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4420898558031132896, guid: b42efc5fb44d6af4cab142418117f806, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1101574020}
+      addedObject: {fileID: 1101574026}
   m_SourcePrefab: {fileID: 100100000, guid: b42efc5fb44d6af4cab142418117f806, type: 3}
 --- !u!1 &1101574019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4420898558031132896, guid: b42efc5fb44d6af4cab142418117f806, type: 3}
   m_PrefabInstance: {fileID: 1101574018}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1101574020
+--- !u!4 &1101574021 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7944988943738690382, guid: b42efc5fb44d6af4cab142418117f806, type: 3}
+  m_PrefabInstance: {fileID: 1101574018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1101574023 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1821759501081699625, guid: b42efc5fb44d6af4cab142418117f806, type: 3}
+  m_PrefabInstance: {fileID: 1101574018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1101574026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2351,14 +2383,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1101574019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e162b60d527e64a8aab9e1ff5013ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 52ca4cd19b2a4db2b7c969bdb24ae2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1101574021 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7944988943738690382, guid: b42efc5fb44d6af4cab142418117f806, type: 3}
-  m_PrefabInstance: {fileID: 1101574018}
-  m_PrefabAsset: {fileID: 0}
+  _animator: {fileID: 1101574023}
+  name: Enes
+  level: 12
+  abilities: []
+  attackPos: {fileID: 1168193400}
+  originalPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1128684534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,7 +2699,6 @@ MonoBehaviour:
   _isActive: 1
   duration: 1
   _uiManager: {fileID: 266240827}
-  _attackManager: {fileID: 697688337}
   meleeAttackType: 0
 --- !u!114 &1167761539
 MonoBehaviour:
@@ -2706,6 +2738,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1167761535}
   m_CullTransparentMesh: 1
+--- !u!1 &1168193399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1168193400}
+  m_Layer: 0
+  m_Name: PlayerAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1168193400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168193399}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.78, y: -10.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1853136273}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1221082758
 GameObject:
   m_ObjectHideFlags: 0
@@ -2897,13 +2960,45 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6390166741750466673, guid: 0859ddcc44a3a9b41ae0fea788729449, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1257518460}
   m_SourcePrefab: {fileID: 100100000, guid: 0859ddcc44a3a9b41ae0fea788729449, type: 3}
 --- !u!4 &1257518454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6686324172889254583, guid: 0859ddcc44a3a9b41ae0fea788729449, type: 3}
   m_PrefabInstance: {fileID: 1257518453}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1257518455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6390166741750466673, guid: 0859ddcc44a3a9b41ae0fea788729449, type: 3}
+  m_PrefabInstance: {fileID: 1257518453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1257518457 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8712904845049080179, guid: 0859ddcc44a3a9b41ae0fea788729449, type: 3}
+  m_PrefabInstance: {fileID: 1257518453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1257518460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257518455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfcc25f241d41e3b7e9a2a17269b28f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1257518457}
+  name: Enemy
+  level: 2
+  abilities: []
+  attackPos: {fileID: 518158787}
+  originalPos: {x: 0, y: 0, z: 0}
+  turnManager: {fileID: 0}
 --- !u!1 &1305203702
 GameObject:
   m_ObjectHideFlags: 0
@@ -3537,6 +3632,8 @@ Transform:
   - {fileID: 1051400729}
   - {fileID: 1101574021}
   - {fileID: 1257518454}
+  - {fileID: 1168193400}
+  - {fileID: 518158787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1918445608
@@ -3965,7 +4062,6 @@ MonoBehaviour:
   _isActive: 1
   duration: 0.5
   _uiManager: {fileID: 266240827}
-  _attackManager: {fileID: 0}
   meleeAttackType: 0
 --- !u!114 &2009158994
 MonoBehaviour:
@@ -4111,7 +4207,6 @@ MonoBehaviour:
   _isActive: 1
   duration: 1
   _uiManager: {fileID: 266240827}
-  _attackManager: {fileID: 697688337}
   meleeAttackType: 0
 --- !u!114 &2009886803
 MonoBehaviour:

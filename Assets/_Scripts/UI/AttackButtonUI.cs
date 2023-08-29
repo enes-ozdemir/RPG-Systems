@@ -24,7 +24,6 @@ namespace _Scripts.UI
         [SerializeField] private float duration;
 
         [SerializeField] private FightUIManager _uiManager;
-        [SerializeField] private AttackManager _attackManager;
         [SerializeField] private AttackType meleeAttackType;
 
         //todo listen an event here for active
@@ -36,7 +35,7 @@ namespace _Scripts.UI
             _uiManager.onEnemyTurnStart += SetInActive;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _uiManager.onPlayerTurnStart -= SetActive;
             _uiManager.onEnemyTurnStart -= SetInActive;
@@ -56,7 +55,8 @@ namespace _Scripts.UI
         private async Task OnAttackButtonClicked()
         {
             Debug.Log("Attack Button Clicked");
-            await _attackManager.PerformAttack(meleeAttackType);
+            _uiManager.onPlayerAttack.Invoke(meleeAttackType);
+          //  await _attackManager.PerformAttack(meleeAttackType);
 
             //todo attack
             //todo give turn

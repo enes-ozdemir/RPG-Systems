@@ -1,4 +1,5 @@
 ﻿using System;
+using _Scripts.Data;
 using _Scripts.TurnSystem;
 using TMPro;
 using UnityEngine;
@@ -13,8 +14,10 @@ namespace _Scripts.UI
         public Action onFightUIEnd;
         public Action onPlayerTurnStart;
         public Action onEnemyTurnStart;
+        public Action<AttackType> onPlayerAttack;
 
         [SerializeField] private TextMeshProUGUI turnText;
+        [SerializeField] private GameObject fightUI;
 
         private void OnEnable()
         {
@@ -22,6 +25,13 @@ namespace _Scripts.UI
             _turnManager.onPlayerTurnStart += SetUIForPlayer;
             _turnManager.onEnemyTurnStart += SetUIForEnemy;
             _turnManager.onGameOver += EndUI;
+            onPlayerAttack += PlayerPerformedAttack;
+        }
+
+        private async void PlayerPerformedAttack(AttackType attackType)
+        {
+            SetUIForEnemy();
+            await _turnManager.PlayerActionTaken(attackType);
         }
 
         private void OnDisable()
@@ -30,13 +40,15 @@ namespace _Scripts.UI
             _turnManager.onPlayerTurnStart -= SetUIForPlayer;
             _turnManager.onEnemyTurnStart -= SetUIForEnemy;
             _turnManager.onGameOver -= EndUI;
+            onPlayerAttack -= PlayerPerformedAttack;
         }
 
         public void EndUI() => onFightUIEnd?.Invoke();
 
         public void SetUIForEnemy()
         {
-            onEnemyTurnStart.Invoke();
+            fightUI.SetActive(false);
+            onEnemyTurnStart?.Invoke();
             turnText.text = "Enemy Turn";
         }
 
@@ -45,6 +57,7 @@ namespace _Scripts.UI
         public void SetUIForPlayer()
         {
             onPlayerTurnStart.Invoke();
+            fightUI.SetActive(true);
             turnText.text = "Player Turn";
         }
     }
