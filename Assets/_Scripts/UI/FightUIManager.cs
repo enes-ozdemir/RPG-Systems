@@ -14,10 +14,11 @@ namespace _Scripts.UI
         public Action onFightUIEnd;
         public Action onPlayerTurnStart;
         public Action onEnemyTurnStart;
-        public Action<AttackType> onPlayerAttack;
+        public Action<Ability> onPlayerAttack;
 
         [SerializeField] private TextMeshProUGUI turnText;
         [SerializeField] private GameObject fightUI;
+        [SerializeField] private GameObject skillUI;
 
         private void OnEnable()
         {
@@ -28,10 +29,11 @@ namespace _Scripts.UI
             onPlayerAttack += PlayerPerformedAttack;
         }
 
-        private async void PlayerPerformedAttack(AttackType attackType)
+
+        private async void PlayerPerformedAttack(Ability ability)
         {
             SetUIForEnemy();
-            await _turnManager.PlayerActionTaken(attackType);
+            await _turnManager.PlayerActionTaken(ability);
         }
 
         private void OnDisable()

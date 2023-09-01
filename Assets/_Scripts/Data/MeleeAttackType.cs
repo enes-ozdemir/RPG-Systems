@@ -3,7 +3,9 @@
     public enum AttackType
     {
         HighAttack,MiddleAttack,LowAttack,
-        RangeAttack,MagicAttack
+      //  RangeAttack,MagicAttack,
+        DirectSkill,SkillFromUp,SkillFromDown,
+        Buff,Debuf,
     }
     
 }

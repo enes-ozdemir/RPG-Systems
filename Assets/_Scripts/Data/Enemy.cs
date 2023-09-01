@@ -1,24 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using _Scripts.TurnSystem;
-using UnityEngine;
+﻿using CharacterCreator2D;
 
 namespace _Scripts.Data
 {
     public class Enemy : Character
     {
-       // [SerializeField] private EnemyAIManager _enemyAIManager;
-        [SerializeField] private TurnManager turnManager;
-        
+        private CharacterViewer _characterViewer;
+
         private void Awake()
         {
-        //    _enemyAIManager=GetComponent<EnemyAIManager>();
-        }
-        
-        public async Task Attack()
-        {
-            
-         //   await _enemyAIManager.Attack();
+            _characterViewer = GetComponent<CharacterViewer>();
+            _characterViewer.SaveToJSON("Assets/Enemy.json");
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using _Scripts.DotweenController;
+using DG.Tweening;
+using UnityEngine;
 
 namespace _Scripts.Data
 {
@@ -8,13 +11,17 @@ namespace _Scripts.Data
         public string abilityName;
         public int power;
         public float cooldown;
-        public AbilityType abilityType;
-        // Other properties for the ability
-    }
+        public AttackType abilityType;
+        public GameObject abilityPrefab;
+        public Sprite abilitySprite;
+        public Vector3 startOffSet;
+        public AnimationBehaviour[] animations;
 
-    public enum AbilityType
-    {
-        DirectSkill,SkillFromUp,SkillFromDown,
-        Buff,Debuf,
+        public async Task PlayAbilityAnimation(Transform skillTransform,Transform targetTransform)
+        {
+            var animationSequenceController = new AnimationSequenceController(skillTransform,targetTransform);
+            var seq = animationSequenceController.StartAnimation(animations);
+            await seq.AsyncWaitForCompletion();
+        }
     }
 }

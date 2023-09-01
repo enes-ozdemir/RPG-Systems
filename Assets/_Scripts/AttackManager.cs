@@ -9,29 +9,43 @@ namespace _Scripts
     {
         private readonly Character _attacker;
         private readonly Character _target;
-        
-        public AttackManager(Character attacker,Character target)
+        public Action onAttackEnd;
+
+        public AttackManager(Character attacker, Character target)
         {
             _attacker = attacker;
             _target = target;
         }
-        
-        public Action onAttackEnd;
 
-        public async Task PerformAttack(AttackType attackType)
+        public async Task PerformAttack(Ability ability)
         {
-            await PerformAttackWithAnimation(attackType);
+            if (ability.abilityType is AttackType.HighAttack or AttackType.MiddleAttack or AttackType.LowAttack)
+            {
+                await PerformAttackWithMovement(ability);
+            }
+            else
+            {
+                await PerformAttackWithOutMovement(ability);
+            }
         }
 
-        private async Task PerformAttackWithAnimation(AttackType attackType)
+        private async Task PerformAttackWithMovement(Ability ability)
         {
             var position = _attacker.attackPos.position;
             _attacker.transform.DOMove(position, 0.3f);
             await Task.Delay(300);
-            await _attacker.Attack(_target, attackType);
+            await _attacker.Attack(_target, ability);
             await Task.Delay(500);
             _attacker.transform.DOMove(_attacker.originalPos, 0.3f);
             await Task.Delay(300);
+            onAttackEnd?.Invoke();
+        }
+
+        private async Task PerformAttackWithOutMovement(Ability ability)
+        {
+            await Task.Delay(100);
+            await _attacker.Attack(_target, ability);
+            await Task.Delay(2000);
             onAttackEnd?.Invoke();
         }
     }

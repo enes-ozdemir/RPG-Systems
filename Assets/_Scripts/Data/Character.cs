@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Scripts.Data
 {
     public class Character : MonoBehaviour
     {
-        [SerializeField] private Animator _animator;
+        private Animator _animator;
         public string name;
         public int level;
         public Stats stats;
@@ -25,15 +26,14 @@ namespace _Scripts.Data
             originalPos = transform.position;
         }
 
-        public void SetCharacter(string name, int level, Stats stats, Ability[] abilities)
+        public void SetCharacter(string name, int level, Stats stats)
         {
             this.name = name;
             this.level = level;
             this.stats = stats;
-            this.abilities = abilities;
         }
 
-        public void PlayAnimation(AnimationType animationType)
+        public void PlayAnimation(AnimationType animationType, AttackType attackType = AttackType.HighAttack)
         {
             switch (animationType)
             {
@@ -41,16 +41,47 @@ namespace _Scripts.Data
                     _animator.Play("Idle");
                     break;
                 case AnimationType.Attack:
-                    _animator.Play("Attack Main Hand 1");
+                    switch (attackType)
+                    {
+                        //Todo Attack Punch 1 2 3
+                        //Todo Attack Kick 1 2
+
+
+                        case AttackType.HighAttack:
+                            _animator.Play("Attack Main Hand 1");
+                            break;
+                        case AttackType.MiddleAttack:
+                            _animator.Play("Attack Main Hand 2");
+                            break;
+                        case AttackType.LowAttack:
+                            _animator.Play("Attack Main Hand 3");
+                            break;
+                        case AttackType.Buff:
+                            _animator.Play("Cast 1");
+                            break;
+                        case AttackType.DirectSkill:
+                            _animator.Play("Attack Punch 1");
+                            break;
+                        case AttackType.SkillFromDown:
+                            _animator.Play("Attack Kick 1");
+                            break;
+                        case AttackType.SkillFromUp:
+                            _animator.Play("Cast 2");
+                            break;
+                        case AttackType.Debuf:
+                            _animator.Play("Cast 1");
+                            break;
+                        default:
+                            _animator.Play("Cast 2");
+                            break;
+                    }
 
                     break;
                 case AnimationType.TakeDamage:
                     _animator.Play("Hit");
-
                     break;
                 case AnimationType.Die:
                     _animator.Play("Die");
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(animationType), animationType, null);
@@ -64,33 +95,65 @@ namespace _Scripts.Data
             PlayAnimation(AnimationType.TakeDamage);
         }
 
-        public async Task Attack(Character target, AttackType attackType)
+        public async Task Attack(Character target, Ability ability)
         {
             Debug.Log(this.name + " attacks " + target.name);
-            int damage = 0;
-            PlayAnimation(AnimationType.Attack);
+            int damage = CalculateDamage(ability); // Calculate damage based on ability
+            PlayAnimation(AnimationType.Attack, ability.abilityType);
 
-            switch (attackType)
-            {
-                case AttackType.HighAttack:
-                    damage = 4;
-                    break;
-                case AttackType.MiddleAttack:
-                    damage = 3;
-                    break;
-                case AttackType.LowAttack:
-                    damage =  2;
-                    break;
-                case AttackType.RangeAttack:
-                    break;
-                case AttackType.MagicAttack:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(attackType), attackType, null);
-            }
-
+            // Pass target's original position to CreateAbility and await the execution
+            await ExecuteAbility(ability, target.transform);
             target.TakeDamage(damage);
+            // You can continue with other logic here without waiting for ability completion.
         }
+
+        private int CalculateDamage(Ability ability) => 10;
+
+        private async Task MoveSkillToTarget(GameObject skill, Vector3 targetPos, float duration)
+        {
+            await skill.transform.DOMove(targetPos, duration).AsyncWaitForCompletion();
+            Destroy(skill);
+        }
+
+        private async Task MoveSkillFromUp(GameObject skill, Vector3 targetPos, float duration)
+        {
+            await skill.transform.DOMove(targetPos + (Vector3.up * 10), duration).AsyncWaitForCompletion();
+            Destroy(skill);
+        }
+
+        private async Task ExecuteAbility(Ability ability, Transform targetOriginalPos)
+        {
+            var skillInWorldSpace = Instantiate(ability.abilityPrefab,
+                transform.position + ability.startOffSet,
+                Quaternion.identity);
+
+            await ability.PlayAbilityAnimation(skillInWorldSpace.transform, targetOriginalPos);
+            Destroy(skillInWorldSpace);
+
+            // switch (ability.abilityType)
+            // {
+            //     case AttackType.HighAttack:
+            //         break;
+            //     case AttackType.MiddleAttack:
+            //         break;
+            //     case AttackType.LowAttack:
+            //         break;
+            //     case AttackType.DirectSkill:
+            //         await MoveSkillToTarget(skillInWorldSpace, targetOriginalPos, ability.abilitySpeed);
+            //         break;
+            //     case AttackType.SkillFromUp:
+            //         break;
+            //     case AttackType.SkillFromDown:
+            //         break;
+            //     case AttackType.Buff:
+            //         break;
+            //     case AttackType.Debuf:
+            //         break;
+            //     default:
+            //         throw new ArgumentOutOfRangeException();
+            // }
+        }
+
 
         public bool IsDead() => stats.health <= 0;
     }

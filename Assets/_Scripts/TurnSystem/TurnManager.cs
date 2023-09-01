@@ -40,8 +40,8 @@ namespace _Scripts.TurnSystem
         private void Awake()
         {
             currentEnemy = enemies[0];
-            _player.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10), null);
-            currentEnemy.SetCharacter("Enemy", 100, new Stats(100, 10, 10, 10, 10, 10), null);
+            _player.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10) );
+            currentEnemy.SetCharacter("Enemy", 100, new Stats(100, 10, 10, 10, 10, 10));
             _playerAttackManager = new AttackManager(_player, currentEnemy); //todo next enemye geçince değiş
             _enemyAttackManager = new AttackManager(currentEnemy, _player); //todo next enemye geçince değiş
         }
@@ -69,7 +69,7 @@ namespace _Scripts.TurnSystem
             else if (_turnIndex == 1)
             {
                 Debug.Log("Enemy Turn");
-                await SetEnemyTurn();
+                await SetEnemyTurn(currentEnemy.abilities[0]);  //todo get it from ai laiter;
             }
         }
 
@@ -119,17 +119,17 @@ namespace _Scripts.TurnSystem
             // Continue with your code
         }
 
-        public async Task PlayerActionTaken(AttackType attackType)
+        public async Task PlayerActionTaken(Ability ability)
         {
             // Disable any UI buttons or controls
-            await _playerAttackManager.PerformAttack(attackType);
+            await _playerAttackManager.PerformAttack(ability);
             _playerActionTcs.SetResult(true);
         }
 
-        private async Task SetEnemyTurn()
+        private async Task SetEnemyTurn(Ability ability)
         {
             onEnemyTurnStart.Invoke();
-            await _enemyAttackManager.PerformAttack(AttackType.LowAttack);
+            await _enemyAttackManager.PerformAttack(ability);
 
             // This method could handle the logic for an enemy's turn, such as triggering AI behaviors.
             // _characters[_currentTurn].PerformAIAction(); // Example: Trigger an AI action for the enemy
