@@ -8,15 +8,28 @@ namespace _Scripts.DotweenController
         private Sequence _sequence;
         private bool _sequenceTriggered;
         private Transform objectToTween;
-        private Transform targetTransform;
-        
-        public AnimationSequenceController(Transform gameObjectToTween, Transform targetTransform)
+        private Vector3 targetPos;
+
+        public AnimationSequenceController(Transform gameObjectToTween, Vector3 targetPos)
         {
             objectToTween = gameObjectToTween;
-            this.targetTransform = targetTransform;
+            this.targetPos = targetPos;
+        }
+        
+        public void MergeSequence(Sequence sequence)
+        {
+            _sequence.Join(sequence);
         }
 
-        public Sequence StartAnimation(AnimationBehaviour[] animations)
+        public Sequence GetSeq(AnimationBehaviour[] animations)
+        {
+            _sequence = DOTween.Sequence();
+            SetTweenData(animations);
+            BuildSequence(animations);
+            return _sequence;
+        }
+
+        public Sequence StartAnimation(AnimationBehaviour[] animations, bool join = false)
         {
             _sequence = DOTween.Sequence();
             SetTweenData(animations);
@@ -24,18 +37,19 @@ namespace _Scripts.DotweenController
             _sequence.Play();
             return _sequence;
         }
-        
+
         private void SetTweenData(AnimationBehaviour[] animations)
         {
             Tween tween;
             for (int i = 0; i < animations.Length; i++)
             {
                 var setting = animations[i];
-                var targetPosition = targetTransform.position + setting.positionOffset;
+                var targetPosition = targetPos
+                                     + setting.positionOffset;
                 switch (setting.tweenType)
                 {
                     case TweenType.Move:
-                        tween = objectToTween.DOMove(targetPosition - new Vector3(3,0,0),
+                        tween = objectToTween.DOMove(targetPosition,
                             setting.animationCurve.Evaluate(setting.duration));
                         animations[i].tween = tween;
                         break;
@@ -54,6 +68,13 @@ namespace _Scripts.DotweenController
                             setting.animationCurve.Evaluate(setting.duration), (int)setting.targetScale, 2);
                         animations[i].tween = tween;
                         break;
+                    case TweenType.SetPosition:
+                        objectToTween.position = targetPosition;
+                        tween = objectToTween.DOMove(targetPosition,
+                            0);
+                        animations[i].tween = tween;
+                        break;
+                 
                 }
             }
         }

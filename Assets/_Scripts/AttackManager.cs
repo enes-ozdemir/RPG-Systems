@@ -45,7 +45,7 @@ namespace _Scripts
         {
             await Task.Delay(100);
             await _attacker.Attack(_target, ability);
-            await Task.Delay(2000);
+            await Task.Delay(500);
             onAttackEnd?.Invoke();
         }
     }

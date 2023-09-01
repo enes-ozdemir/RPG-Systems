@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dad1b49eee8a49608dbbee5292312ee1, type: 3}
-  m_Name: Fireball
+  m_Name: LazerFromUp
   m_EditorClassIdentifier: 
-  abilityName: Fireball
+  abilityName: Lazer
   power: 10
   cooldown: 2
-  abilityType: 3
-  abilitySprite: {fileID: 21300000, guid: 8fc68d6e882db1646a5a92dcb307aac8, type: 3}
+  abilityType: 4
+  abilitySprite: {fileID: 21300000, guid: 4aad6d8a6fba5c147a9344f4218a2e7b, type: 3}
+  startOffSet: {x: 0, y: 0, z: 0}
+  isOnEnemy: 1
   skillParts:
-  - {fileID: 11400000, guid: e57bde2ef0777e24ead613a2f2097aa9, type: 2}
-  - {fileID: 11400000, guid: 20da937b1bd558549b494969259218ff, type: 2}
-  - {fileID: 11400000, guid: 07c2ba3643038674e9a93177c1413f9b, type: 2}
-  startOffSet: {x: 0, y: 11, z: 0}
+  - {fileID: 11400000, guid: 7ef4913804aa4014887f291378c0b530, type: 2}

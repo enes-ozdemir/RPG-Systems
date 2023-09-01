@@ -1,10 +1,9 @@
-﻿using _Scripts.UI.AttackButtons;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace _Scripts.UI
+namespace _Scripts.UI.AttackButtons
 {
     public class MeleeButton : AttackButtonUI
     {

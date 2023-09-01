@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
-using _Scripts.DotweenController;
-using DG.Tweening;
+﻿using System;
+using System.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
+using Sequence = DG.Tweening.Sequence;
 
 namespace _Scripts.Data
 {
@@ -12,16 +13,59 @@ namespace _Scripts.Data
         public int power;
         public float cooldown;
         public AttackType abilityType;
-        public GameObject abilityPrefab;
         public Sprite abilitySprite;
         public Vector3 startOffSet;
-        public AnimationBehaviour[] animations;
+        public bool isOnEnemy;
+        public SkillPart[] skillParts;
 
-        public async Task PlayAbilityAnimation(Transform skillTransform,Transform targetTransform)
+        public Action<float> onDamageTime;
+
+        private async Task PlayAbilityAnimation(Transform playerTransform, Transform targetTransform)
         {
-            var animationSequenceController = new AnimationSequenceController(skillTransform,targetTransform);
-            var seq = animationSequenceController.StartAnimation(animations);
-            await seq.AsyncWaitForCompletion();
+            Sequence savedSequence = null;
+            var initialPos = playerTransform.position + startOffSet;
+            if (isOnEnemy) initialPos = targetTransform.position + startOffSet;
+            for (var i = 0; i < skillParts.Length; i++)
+            {
+                CheckIfAnimEnding(i);
+
+                var skillPart = skillParts[i];
+
+                var skill = Instantiate(skillPart.abilityPrefab, initialPos, quaternion.identity);
+
+                if (savedSequence != null)
+                {
+                    skillPart.MergeSeq(savedSequence);
+                }
+
+                var seq = skillPart.PlayAbilityAnimation(skill.transform,
+                    targetTransform.position);
+                await seq; //enemy offset
+                initialPos = skill.transform.position;
+
+                if (skillPart.joinNextSequence)
+                {
+                    savedSequence = skillPart.GetSequence();
+                }
+                else
+                {
+                    skill.gameObject.SetActive(false);
+                    //Destroy(skill);
+                }
+            }
+        }
+
+        private void CheckIfAnimEnding(int i)
+        {
+            if (i + 1 == skillParts.Length)
+            {
+                onDamageTime?.Invoke(skillParts[i].GetLastAnimationDuration());
+            }
+        }
+
+        public async Task CreateAbility(Transform playerTransform, Transform targetTransform)
+        {
+            await PlayAbilityAnimation(playerTransform, targetTransform);
         }
     }
 }

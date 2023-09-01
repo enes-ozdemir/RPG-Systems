@@ -16,5 +16,8 @@ MonoBehaviour:
   power: 10
   cooldown: 2
   abilityType: 4
-  abilityPrefab: {fileID: 5973003749616979980, guid: ab4f465da0b41194f8c112c1f64ab410, type: 3}
   abilitySprite: {fileID: 21300000, guid: 4aad6d8a6fba5c147a9344f4218a2e7b, type: 3}
+  startOffSet: {x: 0, y: 0, z: 0}
+  isOnEnemy: 1
+  skillParts:
+  - {fileID: 11400000, guid: 7be66948f0509b04c97399b6d253f54f, type: 2}

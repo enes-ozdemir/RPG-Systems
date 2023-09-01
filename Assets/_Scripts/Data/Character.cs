@@ -14,6 +14,7 @@ namespace _Scripts.Data
         public Ability[] abilities;
 
         public Transform attackPos;
+        private Character _currentTarget;
         [HideInInspector] public Vector3 originalPos;
 
         private void OnValidate()
@@ -88,7 +89,7 @@ namespace _Scripts.Data
             }
         }
 
-        public void TakeDamage(int damage)
+        private void TakeDamage(int damage)
         {
             Debug.Log(this.name + " takes " + damage + " damage");
             stats.health -= damage;
@@ -97,38 +98,32 @@ namespace _Scripts.Data
 
         public async Task Attack(Character target, Ability ability)
         {
+            _currentTarget = target;
             Debug.Log(this.name + " attacks " + target.name);
             int damage = CalculateDamage(ability); // Calculate damage based on ability
             PlayAnimation(AnimationType.Attack, ability.abilityType);
 
-            // Pass target's original position to CreateAbility and await the execution
-            await ExecuteAbility(ability, target.transform);
-            target.TakeDamage(damage);
-            // You can continue with other logic here without waiting for ability completion.
+            if (ability.abilityType is AttackType.HighAttack or AttackType.MiddleAttack or AttackType.LowAttack)
+            {
+                CalculateTimeAndDamage(1);
+            }
+            else
+            {
+                // Pass target's original position to CreateAbility and await the execution
+                await ExecuteAbility(ability);
+                // You can continue with other logic here without waiting for ability completion.
+            }
+
+         
         }
 
         private int CalculateDamage(Ability ability) => 10;
 
-        private async Task MoveSkillToTarget(GameObject skill, Vector3 targetPos, float duration)
+        private async Task ExecuteAbility(Ability ability)
         {
-            await skill.transform.DOMove(targetPos, duration).AsyncWaitForCompletion();
-            Destroy(skill);
-        }
-
-        private async Task MoveSkillFromUp(GameObject skill, Vector3 targetPos, float duration)
-        {
-            await skill.transform.DOMove(targetPos + (Vector3.up * 10), duration).AsyncWaitForCompletion();
-            Destroy(skill);
-        }
-
-        private async Task ExecuteAbility(Ability ability, Transform targetOriginalPos)
-        {
-            var skillInWorldSpace = Instantiate(ability.abilityPrefab,
-                transform.position + ability.startOffSet,
-                Quaternion.identity);
-
-            await ability.PlayAbilityAnimation(skillInWorldSpace.transform, targetOriginalPos);
-            Destroy(skillInWorldSpace);
+            ability.onDamageTime += CalculateTimeAndDamage;
+            await ability.CreateAbility(transform, _currentTarget.transform);
+            ability.onDamageTime -= CalculateTimeAndDamage;
 
             // switch (ability.abilityType)
             // {
@@ -154,6 +149,13 @@ namespace _Scripts.Data
             // }
         }
 
+        private async void CalculateTimeAndDamage(float lastSkillDuration)
+        {
+            var damageTime = (int)lastSkillDuration * 200;
+            Debug.Log("Damage time: " + damageTime);
+            await Task.Delay(damageTime);
+            _currentTarget.TakeDamage(1);
+        }
 
         public bool IsDead() => stats.health <= 0;
     }

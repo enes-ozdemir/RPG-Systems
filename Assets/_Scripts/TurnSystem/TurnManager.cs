@@ -51,7 +51,6 @@ namespace _Scripts.TurnSystem
             _player.PlayAnimation(AnimationType.Idle);
             currentEnemy.PlayAnimation(AnimationType.Idle);
 
-
             StartTurn();
             _currentTurn = 0;
             onGameStart.Invoke();

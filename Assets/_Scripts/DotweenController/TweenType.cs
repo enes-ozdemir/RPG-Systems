@@ -5,6 +5,8 @@
         Move,
         Scale,
         Fade,
-        Bounce
+        Bounce,
+        SetPosition,
+        Copy
     }
 }
