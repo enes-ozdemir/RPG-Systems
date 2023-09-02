@@ -408,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   uiManager: {fileID: 266240827}
-  ability: {fileID: 11400000, guid: 6d6c1b294147c3d40ae1119735fc5b1f, type: 2}
+  ability: {fileID: 11400000, guid: 17592b58635767546a3dfa30241fe2a5, type: 2}
   blockedSprite: {fileID: 21300092, guid: fbb6c1d6c8a0a8f45bcf228c2ae1f66e, type: 3}
   normalSprite: {fileID: 21300094, guid: fbb6c1d6c8a0a8f45bcf228c2ae1f66e, type: 3}
   highlightSprite: {fileID: 21300096, guid: fbb6c1d6c8a0a8f45bcf228c2ae1f66e, type: 3}
@@ -1728,7 +1728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &718522799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1843,6 +1843,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5524b78e9ec4115a5a4d5950bff0699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
+  uiManager: {fileID: 0}
+  ability: {fileID: 0}
+  weaponImage: {fileID: 0}
+  borderImage: {fileID: 0}
+  highlightOffset: {x: 0, y: 0}
+  duration: 0
 --- !u!1 &726350037
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,7 +2737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1167761536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2845,6 +2852,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5524b78e9ec4115a5a4d5950bff0699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
+  uiManager: {fileID: 0}
+  ability: {fileID: 0}
+  weaponImage: {fileID: 0}
+  borderImage: {fileID: 0}
+  highlightOffset: {x: 0, y: 0}
+  duration: 0
 --- !u!1 &1168193399
 GameObject:
   m_ObjectHideFlags: 0
@@ -4166,8 +4180,8 @@ GameObject:
   - component: {fileID: 2009886800}
   - component: {fileID: 2009886804}
   - component: {fileID: 2009886803}
-  - component: {fileID: 2009886805}
   - component: {fileID: 2009886801}
+  - component: {fileID: 2009886805}
   m_Layer: 0
   m_Name: AttackButton1
   m_TagString: Untagged
@@ -4289,6 +4303,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5524b78e9ec4115a5a4d5950bff0699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
+  uiManager: {fileID: 266240827}
+  ability: {fileID: 11400000, guid: 3ddc688e0f9eae242a8b62f14dc9ad74, type: 2}
+  weaponImage: {fileID: 2051731084}
+  borderImage: {fileID: 2009886803}
+  highlightOffset: {x: 40, y: 0}
+  duration: 1
 --- !u!1 &2051731082
 GameObject:
   m_ObjectHideFlags: 0
