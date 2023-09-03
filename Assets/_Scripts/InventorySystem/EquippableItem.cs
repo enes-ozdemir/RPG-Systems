@@ -1,3 +1,4 @@
+using CharacterCreator2D;
 using UnityEngine;
 
 namespace _Scripts.InventorySystem
@@ -11,8 +12,8 @@ namespace _Scripts.InventorySystem
         [SerializeField] public EquipmentType equipmentType;
         [SerializeField] private int level;
         [SerializeField] public GameObject itemPrefab;
-        [SerializeField] private bool isSpendable;
         [SerializeField] public ParticleSystem particleSystem;
+        [SerializeField] public Part part;
 
         [SerializeField] public Vector3 coordinates = new Vector3(0, 0, 0);
         [SerializeField] public Quaternion rotation = Quaternion.identity;

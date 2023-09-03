@@ -19,6 +19,7 @@ namespace _Scripts.InventorySystem
 
         private void OnValidate()
         {
+            //Todo might want to delete it
             string path = AssetDatabase.GetAssetPath(this);
             id = AssetDatabase.AssetPathToGUID(path);
         }

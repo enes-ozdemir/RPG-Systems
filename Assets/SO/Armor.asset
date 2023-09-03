@@ -21,7 +21,7 @@ MonoBehaviour:
   equipmentType: 0
   level: 0
   itemPrefab: {fileID: 0}
-  isSpendable: 0
   particleSystem: {fileID: 0}
+  part: {fileID: 11400000, guid: 214ffc32f281b1842b396ee50e4fafa8, type: 2}
   coordinates: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
