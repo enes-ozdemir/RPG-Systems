@@ -1,11 +1,14 @@
-﻿namespace _Scripts.Data
+﻿using System;
+
+namespace _Scripts.Data
 {
+    [Serializable]
     public class Stats
     {
         public int health;
         public int intelligence;
         public int strength;
-        public int dexterity;
+        public int dexterity; //Todo dodge
         public int armor;
         public int magicResist;
         

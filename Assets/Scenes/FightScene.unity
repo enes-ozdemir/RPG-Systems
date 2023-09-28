@@ -1728,7 +1728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &718522799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2443,13 +2443,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ca4cd19b2a4db2b7c969bdb24ae2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Enes
-  level: 12
-  abilities:
-  - {fileID: 11400000, guid: 3ddc688e0f9eae242a8b62f14dc9ad74, type: 2}
-  - {fileID: 11400000, guid: fdba3dfeae962f747937ac92306b914b, type: 2}
-  - {fileID: 11400000, guid: f3c0f3cb4f11ceb41ab57f694ddccf86, type: 2}
   attackPos: {fileID: 1168193400}
+  charData:
+    name: 
+    level: 0
+    stats:
+      health: 0
+      intelligence: 0
+      strength: 0
+      dexterity: 0
+      armor: 0
+      magicResist: 0
+    abilities: []
   originalPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1128684534
 GameObject:
@@ -2737,7 +2742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1167761536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3128,13 +3133,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfcc25f241d41e3b7e9a2a17269b28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Enemy
-  level: 2
-  abilities:
-  - {fileID: 11400000, guid: 3ddc688e0f9eae242a8b62f14dc9ad74, type: 2}
-  - {fileID: 11400000, guid: fdba3dfeae962f747937ac92306b914b, type: 2}
-  - {fileID: 11400000, guid: f3c0f3cb4f11ceb41ab57f694ddccf86, type: 2}
   attackPos: {fileID: 518158787}
+  charData:
+    name: asd
+    level: 0
+    stats:
+      health: 0
+      intelligence: 0
+      strength: 0
+      dexterity: 0
+      armor: 0
+      magicResist: 0
+    abilities:
+    - {fileID: 11400000, guid: 3ddc688e0f9eae242a8b62f14dc9ad74, type: 2}
+    - {fileID: 11400000, guid: 504276ae18c0dbd4a8254ee7944ad2f3, type: 2}
   originalPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1305203702
 GameObject:
@@ -4308,7 +4320,7 @@ MonoBehaviour:
   ability: {fileID: 11400000, guid: 3ddc688e0f9eae242a8b62f14dc9ad74, type: 2}
   weaponImage: {fileID: 2051731084}
   borderImage: {fileID: 2009886803}
-  highlightOffset: {x: 40, y: 0}
+  highlightOffset: {x: -40, y: 40}
   duration: 1
 --- !u!1 &2051731082
 GameObject:

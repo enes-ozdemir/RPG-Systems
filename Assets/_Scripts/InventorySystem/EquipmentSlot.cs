@@ -22,6 +22,7 @@ namespace _Scripts.InventorySystem
                 {
                     UnEquipItem();
                 }
+
                 return true;
             }
 
@@ -30,7 +31,7 @@ namespace _Scripts.InventorySystem
 
         private void UnEquipItem()
         {
-            equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor,null);
+            equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, null);    
         }
 
         private void EquipItem(Item item)

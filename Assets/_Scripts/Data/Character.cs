@@ -8,12 +8,9 @@ namespace _Scripts.Data
     public class Character : MonoBehaviour
     {
         private Animator _animator;
-        public string name;
-        public int level;
-        public Stats stats;
-        public Ability[] abilities;
-
+   
         public Transform attackPos;
+        public CharData charData;
         private Character _currentTarget;
         [HideInInspector] public Vector3 originalPos;
 
@@ -25,13 +22,6 @@ namespace _Scripts.Data
         private void Start()
         {
             originalPos = transform.position;
-        }
-
-        public void SetCharacter(string name, int level, Stats stats)
-        {
-            this.name = name;
-            this.level = level;
-            this.stats = stats;
         }
 
         public void PlayAnimation(AnimationType animationType, AttackType attackType = AttackType.HighAttack)
@@ -92,7 +82,7 @@ namespace _Scripts.Data
         private void TakeDamage(int damage)
         {
             Debug.Log(this.name + " takes " + damage + " damage");
-            stats.health -= damage;
+            charData.stats.health -= damage;
             PlayAnimation(AnimationType.TakeDamage);
         }
 
@@ -113,8 +103,6 @@ namespace _Scripts.Data
                 await ExecuteAbility(ability);
                 // You can continue with other logic here without waiting for ability completion.
             }
-
-         
         }
 
         private int CalculateDamage(Ability ability) => 10;
@@ -157,7 +145,7 @@ namespace _Scripts.Data
             _currentTarget.TakeDamage(1);
         }
 
-        public bool IsDead() => stats.health <= 0;
+        public bool IsDead() => charData.stats.health <= 0;
     }
 
     public enum AnimationType
