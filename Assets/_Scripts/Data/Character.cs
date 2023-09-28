@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DG.Tweening;
+using _Scripts.UI;
 using UnityEngine;
 
 namespace _Scripts.Data
@@ -8,11 +8,16 @@ namespace _Scripts.Data
     public class Character : MonoBehaviour
     {
         private Animator _animator;
-   
+
         public Transform attackPos;
         public CharData charData;
         private Character _currentTarget;
         [HideInInspector] public Vector3 originalPos;
+        [SerializeField] private StatusBar healthBar;
+        [SerializeField] private StatusBar manaBar;
+
+        private int _health;
+        private int _mana;
 
         private void OnValidate()
         {
@@ -21,6 +26,9 @@ namespace _Scripts.Data
 
         private void Start()
         {
+            _health = charData.stats.health;
+            healthBar.SetAmount(_health, charData.stats.health);
+            manaBar.SetAmount(_mana, charData.stats.mana);
             originalPos = transform.position;
         }
 
@@ -82,7 +90,8 @@ namespace _Scripts.Data
         private void TakeDamage(int damage)
         {
             Debug.Log(this.name + " takes " + damage + " damage");
-            charData.stats.health -= damage;
+            _health -= damage;
+            healthBar.SetAmount(_health, charData.stats.health);
             PlayAnimation(AnimationType.TakeDamage);
         }
 
@@ -109,6 +118,8 @@ namespace _Scripts.Data
 
         private async Task ExecuteAbility(Ability ability)
         {
+            manaBar.SetAmount(_mana, charData.stats.mana);
+
             ability.onDamageTime += CalculateTimeAndDamage;
             await ability.CreateAbility(transform, _currentTarget.transform);
             ability.onDamageTime -= CalculateTimeAndDamage;

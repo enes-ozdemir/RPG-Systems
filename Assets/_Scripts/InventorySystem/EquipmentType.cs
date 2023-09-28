@@ -10,5 +10,6 @@
         Shield,
         Ring,
         Amulet,
+        Potion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using _Scripts.InventorySystem.QuickSlot;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +10,15 @@ namespace _Scripts.InventorySystem
     {
         [SerializeField] public Inventory inventory;
         [SerializeField] public CharacterInventory charInventory;
-        //   [SerializeField] private QuickSlotPanel quickSlotPanel;
+        [SerializeField] private QuickSlotPanel quickSlotPanel; //todo implement this
+
         //  [SerializeField] private ShopPanel shopPanel;
         private BaseItemSlot draggedSlot;
         [SerializeField] ItemTooltip itemTooltip;
         [SerializeField] private Image draggableItem;
         [SerializeField] public int gold;
         [SerializeField] public TextMeshProUGUI goldText;
-    
+
         public Action onGoldChanged;
 
         private void OnValidate()
@@ -28,41 +30,41 @@ namespace _Scripts.InventorySystem
         private void Awake()
         {
             onGoldChanged += UpdateGoldText;
-        
+
             //Set Events
             // inventory.OnRightClickEvent += Equip;
             //Pointer Enter
             inventory.OnShiftRightClickEvent += DivideItems;
-            // quickSlotPanel.OnShiftRightClickEvent += DivideItems;
+            quickSlotPanel.OnShiftRightClickEvent += DivideItems;
 
             inventory.OnPointerEnterEvent += ShowTooltip;
             charInventory.OnPointerEnterEvent += ShowTooltip;
-            //  quickSlotPanel.OnPointerEnterEvent += ShowTooltip;
+            quickSlotPanel.OnPointerEnterEvent += ShowTooltip;
             //   shopPanel.OnPointerEnterEvent += ShowTooltip;
             //Pointer Exit
             inventory.OnPointerExitEvent += HideTooltip;
             charInventory.OnPointerExitEvent += HideTooltip;
-            //  quickSlotPanel.OnPointerExitEvent += HideTooltip;
+            quickSlotPanel.OnPointerExitEvent += HideTooltip;
             //  shopPanel.OnPointerExitEvent += HideTooltip;
             //On Begin Drag Event
             inventory.OnBeginDragEvent += BeginDrag;
             charInventory.OnBeginDragEvent += BeginDrag;
-            //   quickSlotPanel.OnBeginDragEvent += BeginDrag;
+            quickSlotPanel.OnBeginDragEvent += BeginDrag;
             //   shopPanel.OnBeginDragEvent += BeginDrag;
             //On Begin Drag Event
             inventory.OnEndDragEvent += EndDrag;
             charInventory.OnEndDragEvent += EndDrag;
-            //   quickSlotPanel.OnEndDragEvent += EndDrag;
+            quickSlotPanel.OnEndDragEvent += EndDrag;
             //   shopPanel.OnEndDragEvent += EndDrag;
             //Drag
             inventory.OnDragEvent += Drag;
             charInventory.OnDragEvent += Drag;
-            //  quickSlotPanel.OnDragEvent += Drag;
+            quickSlotPanel.OnDragEvent += Drag;
             //   shopPanel.OnDragEvent += Drag;
             //Drop
             inventory.OnDropEvent += Drop;
             charInventory.OnDropEvent += Drop;
-            //  quickSlotPanel.OnDropEvent += Drop;
+            quickSlotPanel.OnDropEvent += Drop;
             //   shopPanel.OnDropEvent += Drop;
             //Buy
         }
@@ -112,8 +114,8 @@ namespace _Scripts.InventorySystem
         {
             if (draggedSlot == null) return;
 
-            var isDraggedBuyable = ((ItemSlot) draggedSlot).buyableSlot;
-            var isDroppedBuyable = ((ItemSlot) dropItemSlot).buyableSlot;
+            var isDraggedBuyable = ((ItemSlot)draggedSlot).buyableSlot;
+            var isDroppedBuyable = ((ItemSlot)dropItemSlot).buyableSlot;
 
             if (Input.GetKey(KeyCode.LeftShift) && !isDroppedBuyable && !isDraggedBuyable)
             {
@@ -230,7 +232,8 @@ namespace _Scripts.InventorySystem
                 else
                 {
                     int tempAmount = draggedSlot.Amount;
-                    draggedSlot.Amount = (draggedSlot.Amount * 2 - (dropItemSlot.Item.maximumStacks - dropItemSlot.Amount));
+                    draggedSlot.Amount =
+                        (draggedSlot.Amount * 2 - (dropItemSlot.Item.maximumStacks - dropItemSlot.Amount));
                     dropItemSlot.Amount = dropItemSlot.Item.maximumStacks;
                 }
             }

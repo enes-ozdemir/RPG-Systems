@@ -13,7 +13,7 @@ namespace _Scripts.InventorySystem
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
-        public event Action<BaseItemSlot> OnRightClickEvent;
+        public event Action<BaseItemSlot> OnClickEvent;
         public event Action<BaseItemSlot> OnShiftRightClickEvent;
 
         protected Color normalColor = Color.white;
@@ -82,33 +82,21 @@ namespace _Scripts.InventorySystem
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            // if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
-            // {
-            //     if (OnRightClickEvent != null)
-            //         OnRightClickEvent(this);
-            // }
-
-            if (eventData != null && eventData.button == PointerEventData.InputButton.Right &&
-                Input.GetKey(KeyCode.LeftShift))
+            Debug.Log("Pointer click detected");
+            if (eventData != null && eventData.button == PointerEventData.InputButton.Right && Input.GetKey(KeyCode.LeftShift))
             {
-                if (OnShiftRightClickEvent != null)
-                    OnShiftRightClickEvent?.Invoke(this);
+                OnShiftRightClickEvent?.Invoke(this);
+            }
+
+            if (eventData != null  && Input.GetMouseButtonDown(0) && eventData.button == PointerEventData.InputButton.Left)
+            {
+                OnClickEvent?.Invoke(this);
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (OnPointerEnterEvent != null)
-            {
-                OnPointerEnterEvent(this);
-            }
-        }
+        public void OnPointerEnter(PointerEventData eventData) => OnPointerEnterEvent?.Invoke(this);
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (OnPointerExitEvent != null)
-                OnPointerExitEvent(this);
-        }
+        public void OnPointerExit(PointerEventData eventData) => OnPointerExitEvent?.Invoke(this);
 
         public void OnShiftRightClick(PointerEventData eventData)
         {

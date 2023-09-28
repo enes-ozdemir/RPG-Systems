@@ -11,7 +11,8 @@ namespace _Scripts.Data
         public int dexterity; //Todo dodge
         public int armor;
         public int magicResist;
-        
+        public int mana; //todo delete later or calculate from int
+
         public Stats(int health, int intelligence, int strength, int dexterity, int armor, int magicResist)
         {
             this.health = health;

@@ -32,5 +32,11 @@ namespace _Scripts.InventorySystem
         {
         
         }
+
+        public void UseItem()
+        {
+            Debug.Log("Item used");
+        }
+        
     }
 }

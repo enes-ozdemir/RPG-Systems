@@ -34,5 +34,10 @@ namespace _Scripts
             character.Bake();
         }
 
+        public void EquipItemToQuickSlot()
+        {
+            Debug.Log("EquipItemToQuickSlot");
+        }
+
     }
 }

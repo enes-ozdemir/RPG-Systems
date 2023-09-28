@@ -1,26 +1,69 @@
-﻿using _Scripts.InventorySystem;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace inventory
+namespace _Scripts.InventorySystem.QuickSlot
 {
     public class QuickSlot : ItemSlot
     {
         [SerializeField] private GameObject selection;
+
         private bool _isSelected;
 
-        private void Start()
+        private void OnEnable()
         {
-            DeSelectSlot();
+            OnPointerEnterEvent += SelectSlot;
+            OnPointerExitEvent += DeSelectSlot;
+            OnClickEvent += UseItem;
+        }
+        
+        private void UseItem(BaseItemSlot baseItemSlot)
+        {
+            baseItemSlot.Item.UseItem();
+            //todo implement item usage
         }
 
-        public void SelectSlot()
+        private void OnDisable()
         {
-            selection.SetActive(true);
+            OnPointerEnterEvent -= SelectSlot;
+            OnPointerExitEvent -= DeSelectSlot;
+            OnClickEvent -= UseItem;
         }
 
-        public void DeSelectSlot()
+        private void SelectSlot(BaseItemSlot slot) => selection.SetActive(true);
+
+        private void DeSelectSlot(BaseItemSlot slot) => selection.SetActive(false);
+
+        private void Start() => DeSelectSlot(this);
+
+        public override bool CanAddStack(Item item, int amount = 1) => false;
+
+        public override bool CanReceiveItem(Item item)
         {
-            selection.SetActive(false);
+            if (item is EquippableItem && ((EquippableItem)item).equipmentType == EquipmentType.Potion ||
+                item == null) //Todo level check
+            {
+                if (item != null) EquipItem(item);
+                else
+                {
+                    UnEquipItem();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+        
+        private void UnEquipItem()
+        {
+            Debug.Log("Item UnEquipItem from quick slot");
+            Item = null;
+        }
+
+        private void EquipItem(Item item)
+        {
+            Debug.Log("Item equiped into quick slot");
+            //Todo look into this
+            Item = item;
         }
     }
 }
