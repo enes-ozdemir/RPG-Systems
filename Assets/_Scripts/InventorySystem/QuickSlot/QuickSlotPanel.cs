@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Scripts.InventorySystem.QuickSlot
@@ -14,6 +15,23 @@ namespace _Scripts.InventorySystem.QuickSlot
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
 
+        public event Action<ItemSlot[]> OnQuickSlotChanged;
+
+        private void OnEnable()
+        {
+            OnQuickSlotChanged += SetItems;
+        }
+
+        private void SetItems(ItemSlot[] itemSlots)
+        {
+            var itemList = new List<Item>();
+            foreach (var itemSlot in itemSlots)
+            {
+                itemList.Add(itemSlot.Item);
+            }
+            DataManager.SetQuickSlotItems(itemList);
+        }
+
         private void Awake()
         {
             DontDestroyOnLoad(this);
@@ -21,6 +39,8 @@ namespace _Scripts.InventorySystem.QuickSlot
 
         private void Start()
         {
+            SetItems(itemSlots);
+
             foreach (var slot in itemSlots)
             {
                 slot.OnPointerEnterEvent += OnPointerEnterEvent;
@@ -29,6 +49,7 @@ namespace _Scripts.InventorySystem.QuickSlot
                 slot.OnEndDragEvent += OnEndDragEvent;
                 slot.OnDropEvent += OnDropEvent;
                 slot.OnDragEvent += OnDragEvent;
+
             }
         }
 
@@ -51,6 +72,12 @@ namespace _Scripts.InventorySystem.QuickSlot
         //     return false;
         // }
 
+        public override bool AddItem(Item item)
+        {
+            OnQuickSlotChanged?.Invoke(itemSlots);
+            return base.AddItem(item);
+        }
+
         public override bool RemoveItem(Item item)
         {
             foreach (var slot in itemSlots)
@@ -70,6 +97,7 @@ namespace _Scripts.InventorySystem.QuickSlot
                     slot.Item = null;
                 }
 
+                OnQuickSlotChanged?.Invoke(itemSlots);
                 return true;
             }
 

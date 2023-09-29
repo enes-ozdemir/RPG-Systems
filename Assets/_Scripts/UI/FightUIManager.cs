@@ -1,5 +1,6 @@
 ﻿using System;
 using _Scripts.Data;
+using _Scripts.InventorySystem.QuickSlot;
 using _Scripts.TurnSystem;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace _Scripts.UI
     public class FightUIManager : MonoBehaviour
     {
         [SerializeField] private TurnManager _turnManager;
+        [SerializeField] private QuickSlotPanel _quickSlotPanel;
 
         public Action onFightUIStart;
         public Action onFightUIEnd;
@@ -29,6 +31,18 @@ namespace _Scripts.UI
             onPlayerAttack += PlayerPerformedAttack;
         }
 
+        private void Start()
+        {
+            InitQuickSlot();
+        }
+
+        private void InitQuickSlot()
+        {
+            Debug.Log("InitQuickSlot called in FightUI");
+            var quickSlotItems = DataManager.GetQuickSlotItems();
+            if (quickSlotItems==null) return;
+            _quickSlotPanel.AddItems(quickSlotItems.ToArray());
+        }
 
         private async void PlayerPerformedAttack(Ability ability)
         {

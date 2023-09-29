@@ -33,7 +33,7 @@ namespace _Scripts.MapScripts
 
         private void Update()
         {
-            SetCurrentGrid();
+          //  SetCurrentGrid();
 
             if (Input.GetKeyDown(KeyCode.Space))
             {

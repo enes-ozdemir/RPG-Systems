@@ -17,7 +17,7 @@ namespace _Scripts.InventorySystem.QuickSlot
         
         private void UseItem(BaseItemSlot baseItemSlot)
         {
-            baseItemSlot.Item.UseItem();
+           // baseItemSlot.Item.UseItem();
             //todo implement item usage
         }
 

@@ -22,6 +22,42 @@ namespace _Scripts.InventorySystem
             return false;
         }
 
+        public virtual bool AddItems(Item[] itemList)
+        {
+            if (!IsThereEnoughSpace(itemList.Length)) return false; //Todo add them to a seperate bag or a tab?
+            foreach (var item in itemList)
+            {
+                AddItem(item);
+            }
+
+            return true;
+        }
+
+        private bool IsThereEnoughSpace(int itemListLength)
+        {
+            var spaceCount = 0;
+            foreach (var slot in itemSlots)
+            {
+                if (slot.Item == null)
+                {
+                    continue;
+                }
+
+                spaceCount++;
+            }
+
+            return spaceCount >= itemListLength;
+        }
+
+
+        public virtual void RemoveInventory()
+        {
+            foreach (var slot in itemSlots)
+            {
+                slot.Amount = 0;
+            }
+        }
+
         public virtual bool RemoveItem(Item item)
         {
             foreach (var slot in itemSlots)
