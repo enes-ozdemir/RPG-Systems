@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: potion
   icon: {fileID: 21300000, guid: a61766ac4785caa4f95bfd2dd913d6af, type: 3}
   value: 0
-  equipmentType: 0
+  equipmentType: 8
   level: 0
   particleSystem: {fileID: 0}
   part: {fileID: 0}

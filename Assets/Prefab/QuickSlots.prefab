@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3085267017637302224}
   - component: {fileID: 7509369347121029218}
-  - component: {fileID: 8741827077824352763}
+  - component: {fileID: 319196778909177248}
   - component: {fileID: 8031131051074670708}
   m_Layer: 5
   m_Name: QuickSlots
@@ -38,11 +38,11 @@ RectTransform:
   - {fileID: 4421172639538239917}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -12}
-  m_SizeDelta: {x: 636, y: 101}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 183.9954, y: 0}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7509369347121029218
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51,7 +51,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000622865663275845}
   m_CullTransparentMesh: 0
---- !u!114 &8741827077824352763
+--- !u!114 &319196778909177248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,21 +60,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000622865663275845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 20
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 70, y: 70}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 3
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &8031131051074670708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,11 +134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -219,6 +221,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuickSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 5060858407170108132, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060858407170108132, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e547b43dc8df314d8000fc8e7d08e96, type: 3}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -245,11 +255,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -358,11 +368,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -471,11 +481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -584,11 +594,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8163926893893472726, guid: 3309cf8c84d07de4ea2ed3f56a042c8d, type: 3}
       propertyPath: m_LocalPosition.x

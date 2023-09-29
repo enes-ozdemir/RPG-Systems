@@ -3,19 +3,16 @@ using UnityEngine;
 
 namespace _Scripts.InventorySystem.QuickSlot
 {
-    public class QuickSlotPanel : MonoBehaviour
+    public class QuickSlotPanel : ItemContainer
     {
         [SerializeField] private Transform quickSlotParent;
-        [SerializeField] private QuickSlot[] quickSlots;
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
-        public event Action<BaseItemSlot> OnRightClickEvent;
         public event Action<BaseItemSlot> OnBeginDragEvent;
         public event Action<BaseItemSlot> OnEndDragEvent;
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
-        public event Action<BaseItemSlot> OnShiftRightClickEvent;
 
         private void Awake()
         {
@@ -24,73 +21,56 @@ namespace _Scripts.InventorySystem.QuickSlot
 
         private void Start()
         {
-            for (int i = 0; i < quickSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                quickSlots[i].OnClickEvent += OnRightClickEvent;
-                quickSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
-                quickSlots[i].OnPointerExitEvent += OnPointerExitEvent;
-                quickSlots[i].OnBeginDragEvent += OnBeginDragEvent;
-                quickSlots[i].OnEndDragEvent += OnEndDragEvent;
-                quickSlots[i].OnDropEvent += OnDropEvent;
-                quickSlots[i].OnDragEvent += OnDragEvent;
-                quickSlots[i].OnShiftRightClickEvent += OnShiftRightClickEvent;
+                slot.OnPointerEnterEvent += OnPointerEnterEvent;
+                slot.OnPointerExitEvent += OnPointerExitEvent;
+                slot.OnBeginDragEvent += OnBeginDragEvent;
+                slot.OnEndDragEvent += OnEndDragEvent;
+                slot.OnDropEvent += OnDropEvent;
+                slot.OnDragEvent += OnDragEvent;
             }
-
-            // SelectSlot();
         }
 
         private void OnValidate()
         {
-            quickSlots = quickSlotParent.GetComponentsInChildren<QuickSlot>();
+            itemSlots = quickSlotParent.GetComponentsInChildren<QuickSlot>();
         }
 
-        private void SelectSlot()
-        {
-       
-        }
+        // public override bool AddItem(Item item, out Item previousItem)
+        // {
+        //     foreach (var slot in quickSlots)
+        //     {
+        //         previousItem = slot.Item;
+        //         slot.Item = item;
+        //         slot.Amount = slot.Amount;
+        //         return true;
+        //     }
+        //
+        //     previousItem = null;
+        //     return false;
+        // }
 
-        public bool AddItem(Item item, out Item previousItem)
+        public override bool RemoveItem(Item item)
         {
-            for (int i = 0; i < quickSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                if (true)
+                if (slot.Item != item) continue;
+
+                if (slot.Amount > 0)
                 {
-                    previousItem = quickSlots[i].Item;
-                    quickSlots[i].Item = item;
-                    //_quickSlots[i].Amount = _quickSlots[i].Amount;
-                    return true;
+                    slot.Amount--;
+                    if (slot.Amount == 0)
+                    {
+                        slot.Item = null;
+                    }
                 }
-            }
-
-            previousItem = null;
-            return false;
-        }
-
-        /**
-     * Remove Item from the slot
-    */
-        public bool RemoveItem(Item item)
-        {
-            for (int i = 0; i < quickSlots.Length; i++)
-            {
-                if (quickSlots[i].Item == item)
+                else
                 {
-                    if (quickSlots[i].Amount > 0)
-                    {
-                        quickSlots[i].Amount--;
-                        if (quickSlots[i].Amount == 0)
-                        {
-                            quickSlots[i].Item = null;
-                            //playerManager.currentItem = null;
-                        }
-                    }
-                    else
-                    {
-                        quickSlots[i].Item = null;
-                    }
-
-                    return true;
+                    slot.Item = null;
                 }
+
+                return true;
             }
 
             return false;

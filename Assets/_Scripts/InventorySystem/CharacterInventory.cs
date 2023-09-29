@@ -20,32 +20,28 @@ namespace _Scripts.InventorySystem
 
         private void Start()
         {
-            for (int i = 0; i < itemSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                itemSlots[i].OnPointerEnterEvent += OnPointerEnterEvent;
-                itemSlots[i].OnPointerExitEvent += OnPointerExitEvent;
-                itemSlots[i].OnBeginDragEvent += OnBeginDragEvent;
-                itemSlots[i].OnEndDragEvent += OnEndDragEvent;
-                itemSlots[i].OnDropEvent += OnDropEvent;
-                itemSlots[i].OnDragEvent += OnDragEvent;
-                itemSlots[i].OnShiftRightClickEvent += OnShiftRightClickEvent;
+                slot.OnPointerEnterEvent += OnPointerEnterEvent;
+                slot.OnPointerExitEvent += OnPointerExitEvent;
+                slot.OnBeginDragEvent += OnBeginDragEvent;
+                slot.OnEndDragEvent += OnEndDragEvent;
+                slot.OnDropEvent += OnDropEvent;
+                slot.OnDragEvent += OnDragEvent;
+                slot.OnShiftRightClickEvent += OnShiftRightClickEvent;
             }
             // SetStartingItems();
         }
 
         private void OnValidate()
         {
-            if (itemParent != null)
-            {
-                itemSlots = itemParent.GetComponentsInChildren<EquipmentSlot>();
-            }
-
+            itemSlots = itemParent.GetComponentsInChildren<EquipmentSlot>();
             //  SetStartingItems();
         }
 
         private void SetStartingItems()
         {
-            int i = 0;
+            var i = 0;
             for (; i < startingItems.Count && i < itemSlots.Length; i++)
             {
                 itemSlots[i].Item = startingItems[i].GetCopy();
@@ -58,6 +54,5 @@ namespace _Scripts.InventorySystem
                 itemSlots[i].Amount = 0;
             }
         }
-        
     }
 }

@@ -9,12 +9,12 @@ namespace _Scripts.InventorySystem
         public virtual bool AddItem(Item item)
         {
             Debug.Log(item + " Added to the inventory");
-            for (int i = 0; i < itemSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                if (itemSlots[i].Item == null || itemSlots[i].CanAddStack(item))
+                if (slot.Item == null || slot.CanAddStack(item))
                 {
-                    itemSlots[i].Item = item;
-                    itemSlots[i].Amount++;
+                    slot.Item = item;
+                    slot.Amount++;
                     return true;
                 }
             }
@@ -24,11 +24,11 @@ namespace _Scripts.InventorySystem
 
         public virtual bool RemoveItem(Item item)
         {
-            for (int i = 0; i < itemSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                if (itemSlots[i].Item == item)
+                if (slot.Item == item)
                 {
-                    itemSlots[i].Amount--;
+                    slot.Amount--;
                     return true;
                 }
             }
@@ -38,12 +38,12 @@ namespace _Scripts.InventorySystem
 
         public virtual Item RemoveItem(string itemID)
         {
-            for (int i = 0; i < itemSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                Item item = itemSlots[i].Item;
+                var item = slot.Item;
                 if (item != null && item.ID == itemID)
                 {
-                    itemSlots[i].Amount--;
+                    slot.Amount--;
                     return item;
                 }
             }
@@ -53,9 +53,9 @@ namespace _Scripts.InventorySystem
 
         public virtual bool IsFull()
         {
-            for (int i = 0; i < itemSlots.Length; i++)
+            foreach (var slot in itemSlots)
             {
-                if (itemSlots[i].Item == null)
+                if (slot.Item == null)
                 {
                     return false;
                 }
@@ -66,10 +66,10 @@ namespace _Scripts.InventorySystem
 
         public virtual int ItemCount(string itemID)
         {
-            int itemCount = 0;
-            for (int i = 0; i < itemSlots.Length; i++)
+            var itemCount = 0;
+            foreach (var slot in itemSlots)
             {
-                if (itemSlots[i].Item.ID == itemID)
+                if (slot.Item.ID == itemID)
                 {
                     itemCount++;
                 }

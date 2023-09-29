@@ -35,7 +35,7 @@ namespace _Scripts.InventorySystem
             // inventory.OnRightClickEvent += Equip;
             //Pointer Enter
             inventory.OnShiftRightClickEvent += DivideItems;
-            quickSlotPanel.OnShiftRightClickEvent += DivideItems;
+           // quickSlotPanel.OnShiftRightClickEvent += DivideItems;
 
             inventory.OnPointerEnterEvent += ShowTooltip;
             charInventory.OnPointerEnterEvent += ShowTooltip;

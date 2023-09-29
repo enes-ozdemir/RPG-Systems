@@ -57,6 +57,7 @@ namespace _Scripts.InventorySystem.QuickSlot
         {
             Debug.Log("Item UnEquipItem from quick slot");
             Item = null;
+            image.gameObject.SetActive(false);
         }
 
         private void EquipItem(Item item)
@@ -64,6 +65,7 @@ namespace _Scripts.InventorySystem.QuickSlot
             Debug.Log("Item equiped into quick slot");
             //Todo look into this
             Item = item;
+            image.gameObject.SetActive(true);
         }
     }
 }
