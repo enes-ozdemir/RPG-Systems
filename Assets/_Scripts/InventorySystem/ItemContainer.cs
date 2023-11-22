@@ -27,7 +27,7 @@ namespace _Scripts.InventorySystem
             if (!IsThereEnoughSpace(itemList.Length)) return false; //Todo add them to a seperate bag or a tab?
             foreach (var item in itemList)
             {
-                AddItem(item);
+                if(item!=null) AddItem(item);
             }
 
             return true;
@@ -40,10 +40,8 @@ namespace _Scripts.InventorySystem
             {
                 if (slot.Item == null)
                 {
-                    continue;
+                    spaceCount++;
                 }
-
-                spaceCount++;
             }
 
             return spaceCount >= itemListLength;
@@ -55,6 +53,7 @@ namespace _Scripts.InventorySystem
             foreach (var slot in itemSlots)
             {
                 slot.Amount = 0;
+                slot.Item = null;
             }
         }
 

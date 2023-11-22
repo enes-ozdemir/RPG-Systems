@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using _Scripts.Data;
 using _Scripts.InventorySystem.QuickSlot;
 using _Scripts.TurnSystem;
@@ -38,10 +39,10 @@ namespace _Scripts.UI
 
         private void InitQuickSlot()
         {
-            Debug.Log("InitQuickSlot called in FightUI");
-            var quickSlotItems = DataManager.GetQuickSlotItems();
-            if (quickSlotItems==null) return;
-            _quickSlotPanel.AddItems(quickSlotItems.ToArray());
+            // Debug.Log("InitQuickSlot called in FightUI");
+            // var quickSlotItems = SceneDataManager._playerData.quickSlotItems;
+            // if (quickSlotItems==null) return;
+            // _quickSlotPanel.AddItems(quickSlotItems.ToArray());
         }
 
         private async void PlayerPerformedAttack(Ability ability)

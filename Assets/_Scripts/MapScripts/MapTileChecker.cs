@@ -44,7 +44,7 @@ namespace _Scripts.MapScripts
         private void LookAround()
         {
             EncounterInfo.currentTileInfo = currentTile;
-            SceneManager.LoadScene(0);
+            SceneController.LoadScene(0);
         }
 
         private void SetCurrentGrid()

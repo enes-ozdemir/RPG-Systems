@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CharacterCreator2D;
 using UnityEngine;
 
 namespace _Scripts.InventorySystem
@@ -7,7 +8,12 @@ namespace _Scripts.InventorySystem
     public class CharacterInventory : ItemContainer
     {
         [SerializeField] private List<EquippableItem> startingItems;
+        [SerializeField] private List<EquippableItem> characterItems;
+        [SerializeField] private PlayerEquipmentController _equipmentController;
+
+
         [SerializeField] private Transform itemParent;
+        //todo handle equiped items
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
@@ -17,6 +23,42 @@ namespace _Scripts.InventorySystem
         public event Action<BaseItemSlot> OnDropEvent;
         public event Action<BaseItemSlot> OnShiftRightClickEvent;
         public event Action<BaseItemSlot> onBuyEvent;
+
+        public Action<EquippableItem> OnCharInvEquip; //todo implement this
+        public Action<EquippableItem> OnCharInvUnequip; //todo implement this
+
+        private void OnEnable()
+        {
+            OnCharInvEquip += SetItems;
+            OnCharInvUnequip += SetItems;
+        }
+
+        private void SetItems(EquippableItem item)
+        {
+            _equipmentController.EquipItem(SlotCategory.Armor,item.part); //add converter for equipment type to slot category
+            foreach (var slot in (EquipmentSlot[])itemSlots)
+            {
+                if (slot.equipmentType == item.equipmentType)
+                {
+                    slot.Item = item;
+                    break;
+                }
+            }
+        }
+        
+        public void EquipAllItems(List<EquippableItem> playerDataEquipment)
+        {
+            foreach (var equippable in playerDataEquipment)
+            {
+                SetItems(equippable);
+            }
+        }
+
+        private void OnDisable()
+        {
+            OnCharInvEquip -= SetItems;
+            OnCharInvUnequip -= SetItems;
+        }
 
         private void Start()
         {
@@ -54,5 +96,6 @@ namespace _Scripts.InventorySystem
                 itemSlots[i].Amount = 0;
             }
         }
+
     }
 }

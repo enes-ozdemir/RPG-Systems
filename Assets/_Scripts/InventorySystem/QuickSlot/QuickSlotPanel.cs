@@ -15,32 +15,33 @@ namespace _Scripts.InventorySystem.QuickSlot
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
 
-        public event Action<ItemSlot[]> OnQuickSlotChanged;
+        public Action<QuickSlot[]> OnQuickSlotChanged;
+        public Action<Item> OnQuickSlotItemAdded;
+        public Action<Item> OnQuickSlotItemRemoved;
+
+        private readonly List<Item> _itemList = new List<Item>();
+
+        private void OnValidate()
+        {
+            itemSlots = quickSlotParent.GetComponentsInChildren<QuickSlot>();
+        }
 
         private void OnEnable()
         {
-            OnQuickSlotChanged += SetItems;
+            //  OnQuickSlotChanged += SetItems;
+            OnQuickSlotItemAdded += AddNewItem;
+            OnQuickSlotItemRemoved += AddNewItem;
         }
 
-        private void SetItems(ItemSlot[] itemSlots)
+        private void OnDisable()
         {
-            var itemList = new List<Item>();
-            foreach (var itemSlot in itemSlots)
-            {
-                itemList.Add(itemSlot.Item);
-            }
-            DataManager.SetQuickSlotItems(itemList);
-        }
-
-        private void Awake()
-        {
-            DontDestroyOnLoad(this);
+            //OnQuickSlotChanged -= SetItems;
+            OnQuickSlotItemAdded -= AddNewItem;
+            OnQuickSlotItemRemoved -= RemoveNewItem;
         }
 
         private void Start()
         {
-            SetItems(itemSlots);
-
             foreach (var slot in itemSlots)
             {
                 slot.OnPointerEnterEvent += OnPointerEnterEvent;
@@ -49,33 +50,40 @@ namespace _Scripts.InventorySystem.QuickSlot
                 slot.OnEndDragEvent += OnEndDragEvent;
                 slot.OnDropEvent += OnDropEvent;
                 slot.OnDragEvent += OnDragEvent;
-
             }
         }
 
-        private void OnValidate()
+        private void RemoveNewItem(Item item)
         {
-            itemSlots = quickSlotParent.GetComponentsInChildren<QuickSlot>();
+            _itemList.Remove(item);
+            OnQuickSlotChanged?.Invoke(itemSlots as QuickSlot[]);
         }
 
-        // public override bool AddItem(Item item, out Item previousItem)
-        // {
-        //     foreach (var slot in quickSlots)
-        //     {
-        //         previousItem = slot.Item;
-        //         slot.Item = item;
-        //         slot.Amount = slot.Amount;
-        //         return true;
-        //     }
-        //
-        //     previousItem = null;
-        //     return false;
-        // }
+        private void AddNewItem(Item item)
+        {
+            _itemList.Add(item);
+            OnQuickSlotChanged?.Invoke(itemSlots as QuickSlot[]);
+        }
 
         public override bool AddItem(Item item)
         {
-            OnQuickSlotChanged?.Invoke(itemSlots);
-            return base.AddItem(item);
+            Debug.Log($"Item added {item.itemName}");
+            _itemList.Add(item);
+            OnQuickSlotChanged?.Invoke(itemSlots as QuickSlot[]);
+            return true;
+        }
+
+        public virtual void OverrideQuickSlotItems(Item[] itemList)
+        {
+            for (var i = 0; i < itemList.Length; i++)
+            {
+                var item = itemList[i];
+                if (item != null)
+                {
+                    ((QuickSlot)itemSlots[i]).AddItemToSlot(item);
+                    ((QuickSlot)itemSlots[i]).Amount = 1;
+                }
+            }
         }
 
         public override bool RemoveItem(Item item)
@@ -83,25 +91,12 @@ namespace _Scripts.InventorySystem.QuickSlot
             foreach (var slot in itemSlots)
             {
                 if (slot.Item != item) continue;
-
-                if (slot.Amount > 0)
-                {
-                    slot.Amount--;
-                    if (slot.Amount == 0)
-                    {
-                        slot.Item = null;
-                    }
-                }
-                else
-                {
-                    slot.Item = null;
-                }
-
-                OnQuickSlotChanged?.Invoke(itemSlots);
-                return true;
+                slot.Item = null;
+                _itemList.Remove(item);
             }
 
-            return false;
+            OnQuickSlotChanged?.Invoke(itemSlots as QuickSlot[]);
+            return true;
         }
     }
 }

@@ -29,9 +29,11 @@ namespace _Scripts.InventorySystem
                 if (_item == null)
                 {
                     image.color = disabledColor;
+                    image.gameObject.SetActive(false);
                 }
                 else
                 {
+                    image.gameObject.SetActive(true);
                     image.sprite = _item.icon;
                     image.color = normalColor;
                 }

@@ -1,12 +1,13 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
 namespace _Scripts.InventorySystem
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu] [Serializable]
     public class Item : ScriptableObject
     {
-        [SerializeField] string id;
+        [SerializeField] public string id;
         [Range(1,16)]
         public int maximumStacks = 1;
         public string ID

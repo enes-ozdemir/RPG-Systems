@@ -11,5 +11,10 @@ namespace _Scripts.Data
             _characterViewer = GetComponent<CharacterViewer>();
             _characterViewer.SaveToJSON("Assets/Enemy.json");
         }
+
+        public void SetCharInformation(CharData enemyData)
+        {
+            charData = enemyData;
+        }
     }
 }

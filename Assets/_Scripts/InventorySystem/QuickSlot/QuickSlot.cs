@@ -5,8 +5,14 @@ namespace _Scripts.InventorySystem.QuickSlot
     public class QuickSlot : ItemSlot
     {
         [SerializeField] private GameObject selection;
-
+        [SerializeField] private QuickSlotPanel quickSlotPanel;
         private bool _isSelected;
+
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            quickSlotPanel = GetComponentInParent<QuickSlotPanel>();
+        }
 
         private void OnEnable()
         {
@@ -14,10 +20,10 @@ namespace _Scripts.InventorySystem.QuickSlot
             OnPointerExitEvent += DeSelectSlot;
             OnClickEvent += UseItem;
         }
-        
+
         private void UseItem(BaseItemSlot baseItemSlot)
         {
-           // baseItemSlot.Item.UseItem();
+            // baseItemSlot.Item.UseItem();
             //todo implement item usage
         }
 
@@ -41,10 +47,15 @@ namespace _Scripts.InventorySystem.QuickSlot
             if (item is EquippableItem && ((EquippableItem)item).equipmentType == EquipmentType.Potion ||
                 item == null) //Todo level check
             {
-                if (item != null) EquipItem(item);
+                if (item != null)
+                {
+                    EquipItem(item);
+                    AddItemToSlot(item);
+                }
                 else
                 {
-                    UnEquipItem();
+                    UnEquipItem(item);
+                  //  RemoveItemFromSlot();
                 }
 
                 return true;
@@ -52,20 +63,31 @@ namespace _Scripts.InventorySystem.QuickSlot
 
             return false;
         }
-        
-        private void UnEquipItem()
+
+        private void UnEquipItem(Item item)
         {
             Debug.Log("Item UnEquipItem from quick slot");
-            Item = null;
-            image.gameObject.SetActive(false);
+            quickSlotPanel.OnQuickSlotItemRemoved?.Invoke(item);
         }
 
         private void EquipItem(Item item)
         {
+            //quickSlotPanel.OnQuickSlotItemAdded.Invoke(item);
             Debug.Log("Item equiped into quick slot");
+            quickSlotPanel.OnQuickSlotItemAdded?.Invoke(item);
             //Todo look into this
+        }
+
+        public void AddItemToSlot(Item item)
+        {
             Item = item;
-            image.gameObject.SetActive(true);
+          //  image.gameObject.SetActive(true);
+        }
+
+        public void RemoveItemFromSlot()
+        {
+            Item = null;
+           // image.gameObject.SetActive(false);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace _Scripts.Data
     public class Character : MonoBehaviour
     {
         private Animator _animator;
-
         public Transform attackPos;
         public CharData charData;
         private Character _currentTarget;

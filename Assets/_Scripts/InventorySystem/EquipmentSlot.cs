@@ -9,6 +9,7 @@ namespace _Scripts.InventorySystem
         public EquipmentType equipmentType;
         [SerializeField] Color emptyColor = Color.gray;
         [SerializeField] private PlayerEquipmentController equipmentController;
+        [SerializeField] private CharacterInventory characterInventory;
 
         public override bool CanAddStack(Item item, int amount = 1) => false;
 
@@ -20,7 +21,7 @@ namespace _Scripts.InventorySystem
                 if (item != null) EquipItem(item);
                 else
                 {
-                    UnEquipItem();
+                    UnEquipItem(item);
                 }
 
                 return true;
@@ -29,15 +30,33 @@ namespace _Scripts.InventorySystem
             return false;
         }
 
-        private void UnEquipItem()
+        private void UnEquipItem(Item item)
         {
             equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, null);    
+            characterInventory.OnCharInvUnequip.Invoke((EquippableItem)item);
+
         }
 
         private void EquipItem(Item item)
         {
             equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, ((EquippableItem)item).part);
+            characterInventory.OnCharInvEquip.Invoke((EquippableItem)item);
         }
+        
+        //equip all items
+        public void EquipAllItems(EquippableItem[] equippableItems)
+        {
+            foreach (var item in equippableItems)
+            {
+                equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, item.part);
+                
+                
+                
+            }
+            
+        }
+        
+        
 
         protected override void OnValidate()
         {

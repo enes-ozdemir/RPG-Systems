@@ -40,8 +40,10 @@ namespace _Scripts.TurnSystem
         private void Awake()
         {
             currentEnemy = enemies[0];
-            _player.charData.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10) );
-            currentEnemy.charData.SetCharacter("Enemy", 100, new Stats(100, 10, 10, 10, 10, 10));
+            //_player.charData.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10) );
+            var newEnemy = ScriptableObject.CreateInstance<CharData>();
+            newEnemy.SetCharacter("Enemy", 100, new Stats(100, 10, 10, 10, 10, 10));
+            currentEnemy.SetCharInformation(newEnemy);
             _playerAttackManager = new AttackManager(_player, currentEnemy); //todo next enemye geçince değiş
             _enemyAttackManager = new AttackManager(currentEnemy, _player); //todo next enemye geçince değiş
         }
@@ -62,12 +64,10 @@ namespace _Scripts.TurnSystem
 
             if (_turnIndex == 0)
             {
-                Debug.Log("Player Turn");
                 await SetPlayerTurn();
             }
             else if (_turnIndex == 1)
             {
-                Debug.Log("Enemy Turn");
                 await SetEnemyTurn(currentEnemy.charData.abilities[0]);  //todo get it from ai laiter;
             }
         }

@@ -2137,21 +2137,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPos: {fileID: 1168193400}
-  charData:
-    name: 
-    level: 0
-    stats:
-      health: 0
-      intelligence: 0
-      strength: 0
-      dexterity: 0
-      armor: 0
-      magicResist: 0
-      mana: 0
-    abilities: []
+  charData: {fileID: 11400000, guid: dc08ff759ff2e6247abc27e889344621, type: 2}
   originalPos: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 533950371}
   manaBar: {fileID: 2037408616}
+  _playerData: {fileID: 11400000, guid: ab75629456ff63a48a4e3d50e33ec3ad, type: 2}
 --- !u!1 &1128684534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,20 +2725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPos: {fileID: 518158787}
-  charData:
-    name: asd
-    level: 0
-    stats:
-      health: 0
-      intelligence: 0
-      strength: 0
-      dexterity: 0
-      armor: 0
-      magicResist: 0
-      mana: 0
-    abilities:
-    - {fileID: 11400000, guid: 3ddc688e0f9eae242a8b62f14dc9ad74, type: 2}
-    - {fileID: 11400000, guid: 504276ae18c0dbd4a8254ee7944ad2f3, type: 2}
+  charData: {fileID: 0}
   originalPos: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 879751642}
   manaBar: {fileID: 338138821}

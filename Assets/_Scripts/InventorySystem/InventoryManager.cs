@@ -182,8 +182,8 @@ namespace _Scripts.InventorySystem
 
         private void SwapItems(BaseItemSlot dropItemSlot)
         {
-            Item draggedItem = draggedSlot.Item;
-            int draggedItemAmount = draggedSlot.Amount;
+            var draggedItem = draggedSlot.Item;
+            var draggedItemAmount = draggedSlot.Amount;
 
             draggedSlot.Item = dropItemSlot.Item;
             draggedSlot.Amount = dropItemSlot.Amount;
