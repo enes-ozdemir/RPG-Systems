@@ -1,15 +1,19 @@
 using System;
+using System.Threading.Tasks;
+using Enca.SaveSystem;
 using TMPro;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace _Scripts.InventorySystem
 {
-    public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,ISaveable
     {
         [SerializeField] protected Image image;
         [SerializeField] protected TextMeshProUGUI amountText;
+        [SerializeField] [ReadOnly] protected int index;
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;
@@ -20,6 +24,16 @@ namespace _Scripts.InventorySystem
         protected Color disabledColor = new Color(1, 1, 1, 0);
         protected Item _item;
 
+        public Task OnSaveAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task OnLoadAsync()
+        {
+            throw new NotImplementedException();
+        }
+        
         public Item Item
         {
             get { return _item; }
@@ -69,6 +83,8 @@ namespace _Scripts.InventorySystem
 
             if (amountText == null)
                 amountText = GetComponentInChildren<TextMeshProUGUI>();
+            
+            index = transform.GetSiblingIndex();
         }
 
         public virtual bool CanAddStack(Item item, int amount = 1)
@@ -103,5 +119,7 @@ namespace _Scripts.InventorySystem
         public void OnShiftRightClick(PointerEventData eventData)
         {
         }
+
+ 
     }
 }

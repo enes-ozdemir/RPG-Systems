@@ -39,13 +39,13 @@ namespace _Scripts
 
         public static int GetItemLevelForDrop(int level)
         {
-            var minLevel = 1;
+            int minLevel = 1;
             if (level >= 4)
             {
                 minLevel = level - 3;
             }
 
-            var itemLevel = Random.Range(minLevel, level + 3);
+            int itemLevel = Random.Range(minLevel, level + 3);
             return itemLevel;
         }
 

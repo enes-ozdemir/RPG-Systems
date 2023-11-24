@@ -47,47 +47,12 @@ namespace _Scripts.InventorySystem.QuickSlot
             if (item is EquippableItem && ((EquippableItem)item).equipmentType == EquipmentType.Potion ||
                 item == null) //Todo level check
             {
-                if (item != null)
-                {
-                    EquipItem(item);
-                    AddItemToSlot(item);
-                }
-                else
-                {
-                    UnEquipItem(item);
-                  //  RemoveItemFromSlot();
-                }
-
                 return true;
             }
 
             return false;
         }
 
-        private void UnEquipItem(Item item)
-        {
-            Debug.Log("Item UnEquipItem from quick slot");
-            quickSlotPanel.OnQuickSlotItemRemoved?.Invoke(item);
-        }
-
-        private void EquipItem(Item item)
-        {
-            //quickSlotPanel.OnQuickSlotItemAdded.Invoke(item);
-            Debug.Log("Item equiped into quick slot");
-            quickSlotPanel.OnQuickSlotItemAdded?.Invoke(item);
-            //Todo look into this
-        }
-
-        public void AddItemToSlot(Item item)
-        {
-            Item = item;
-          //  image.gameObject.SetActive(true);
-        }
-
-        public void RemoveItemFromSlot()
-        {
-            Item = null;
-           // image.gameObject.SetActive(false);
-        }
+        public void AddItemToSlot(Item item) => Item = item;
     }
 }

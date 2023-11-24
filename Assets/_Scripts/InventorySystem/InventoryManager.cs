@@ -10,7 +10,7 @@ namespace _Scripts.InventorySystem
     {
         [SerializeField] public Inventory inventory;
         [SerializeField] public CharacterInventory charInventory;
-        [SerializeField] private QuickSlotPanel quickSlotPanel; //todo implement this
+        [SerializeField] public QuickSlotPanel quickSlotPanel; //todo implement this
 
         //  [SerializeField] private ShopPanel shopPanel;
         private BaseItemSlot draggedSlot;
@@ -20,11 +20,21 @@ namespace _Scripts.InventorySystem
         [SerializeField] public TextMeshProUGUI goldText;
 
         public Action onGoldChanged;
+        public Action<Item[]> OnQuickSlotChanged;
 
         private void OnValidate()
         {
             if (itemTooltip == null)
                 itemTooltip = FindObjectOfType<ItemTooltip>();
+        }
+        
+        public void InitQuickSlot(Item[] itemArray)
+        {
+            // var quickSlotItems = DataManager.GetQuickSlotItems();
+            quickSlotPanel.RemoveInventory();
+            quickSlotPanel.OverrideQuickSlotItems(itemArray);
+            //characterInventory.RemoveInventory();
+            //characterInventory.EquipAllItems(_playerData.equipment);
         }
 
         private void Awake()
@@ -35,7 +45,7 @@ namespace _Scripts.InventorySystem
             // inventory.OnRightClickEvent += Equip;
             //Pointer Enter
             inventory.OnShiftRightClickEvent += DivideItems;
-           // quickSlotPanel.OnShiftRightClickEvent += DivideItems;
+            // quickSlotPanel.OnShiftRightClickEvent += DivideItems;
 
             inventory.OnPointerEnterEvent += ShowTooltip;
             charInventory.OnPointerEnterEvent += ShowTooltip;
@@ -182,14 +192,22 @@ namespace _Scripts.InventorySystem
 
         private void SwapItems(BaseItemSlot dropItemSlot)
         {
+            var tempItem = dropItemSlot.Item;
+            var tempItemAmount = dropItemSlot.Amount;
+
             var draggedItem = draggedSlot.Item;
             var draggedItemAmount = draggedSlot.Amount;
 
-            draggedSlot.Item = dropItemSlot.Item;
-            draggedSlot.Amount = dropItemSlot.Amount;
+            draggedSlot.Item = tempItem;
+            draggedSlot.Amount = tempItemAmount;
 
             dropItemSlot.Item = draggedItem;
             dropItemSlot.Amount = draggedItemAmount;
+
+            if (dropItemSlot is QuickSlot.QuickSlot || draggedSlot is QuickSlot.QuickSlot)
+            {
+                OnQuickSlotChanged?.Invoke(quickSlotPanel.GetItems());
+            }
         }
 
         private void DivideItems(BaseItemSlot dropItemSlot)

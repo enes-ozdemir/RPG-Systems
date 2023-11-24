@@ -1,97 +1,68 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using _Scripts;
 using _Scripts.Data;
 using _Scripts.InventorySystem;
-using _Scripts.InventorySystem.QuickSlot;
 using Enca.SaveSystem;
 using UnityEngine;
 
-public class SceneDataManager : MonoBehaviour,ISaveable
+namespace _Scripts
 {
-    [SerializeField] private Inventory inventory;
-    [SerializeField] private QuickSlotPanel quickSlotPanel;
-    [SerializeField] private CharacterInventory characterInventory;
-    
-    public PlayerData _playerData;
-
-    private void Awake()
+    public class SceneDataManager : MonoBehaviour, ISaveable
     {
-        DontDestroyOnLoad(gameObject);
-    }
-    
-    public async Task OnSaveAsync()
-    {
-        await SaveLoadUtility.SaveAsync(_playerData);
-    }
+        [SerializeField] private InventoryManager inventoryManager;
 
-    public async Task OnLoadAsync()
-    {
-        await SaveLoadUtility.LoadAsync(_playerData);
-    }
+        public PlayerData playerData;
 
-    private void OnEnable()
-    {
-        quickSlotPanel.OnQuickSlotChanged += SetQuickSlotItems;
-        characterInventory.OnCharInvEquip += SetCharInvItems;
-        characterInventory.OnCharInvEquip += RemoveCharInvItems;
-        SceneController.onNewSceneLoaded += OnNewSceneLoaded;
-    }
-
-    private async void OnDestroy()
-    {
-       await OnSaveAsync();
-    }
-
-    private async void OnNewSceneLoaded(int obj)
-    {
-        //Todo make this go to loading scene ??
-        await OnSaveAsync();
-        await LoadInfo();
-    }
-
-    private void RemoveCharInvItems(EquippableItem item)
-    {
-        _playerData.equipment.Remove(item);
-
-    }
-
-    private void SetCharInvItems(EquippableItem item)
-    {
-        _playerData.equipment.Add(item);
-    }
-
-    private async void Start()
-    {
-        // DataManager.SetDroppedItems(InitializeDroppedItems());
-        await LoadInfo();
-    }
-
-    private async Task LoadInfo()
-    {
-        await OnLoadAsync();
-        InitQuickSlot();
-    }
-
-    private void SetQuickSlotItems(ItemSlot[] itemSlots)
-    {
-        var itemList = new List<Item>();
-        foreach (var itemSlot in itemSlots)
+        private void Awake()
         {
-            itemList.Add(itemSlot.Item);
+            DontDestroyOnLoad(gameObject);
         }
 
-        _playerData.quickSlotItems = itemList.ToArray();
-    }
+        public async Task OnSaveAsync()
+        {
+            await SaveLoadUtility.SaveAsync(playerData);
+        }
 
-    private void InitQuickSlot()
-    {
-       // var quickSlotItems = DataManager.GetQuickSlotItems();
-        quickSlotPanel.RemoveInventory();
-        quickSlotPanel.OverrideQuickSlotItems(_playerData.quickSlotItems.ToArray());
-        characterInventory.RemoveInventory();
-        characterInventory.EquipAllItems(_playerData.equipment);
-    }
+        public async Task OnLoadAsync()
+        {
+            await SaveLoadUtility.LoadAsync(playerData);
+        }
 
+        private void OnEnable()
+        {
+            inventoryManager.OnQuickSlotChanged += SetQuickSlotItems;
+            //characterInventory.OnCharInvEquip += SetCharInvItems;
+            // characterInventory.OnCharInvEquip += RemoveCharInvItems;
+            SceneController.onNewSceneLoaded += OnNewSceneLoaded;
+        }
+
+        private void SetQuickSlotItems(Item[] itemArray) => playerData.quickSlotItems = itemArray.ToArray();
+
+        private async void OnDestroy()
+        {
+            await OnSaveAsync();
+        }
+
+        private async void OnNewSceneLoaded(int obj)
+        {
+            //Todo make this go to loading scene ??
+            await OnSaveAsync();
+            await LoadInfo();
+        }
+
+        private void RemoveCharInvItems(EquippableItem item) => playerData.equipment.Remove(item);
+
+        private void SetCharInvItems(EquippableItem item) => playerData.equipment.Add(item);
+
+        private async void Start()
+        {
+            await LoadInfo();
+        }
+
+        private async Task LoadInfo()
+        {
+            await OnLoadAsync();
+            inventoryManager.InitQuickSlot(playerData.quickSlotItems.ToArray());
+        }
+    }
 }

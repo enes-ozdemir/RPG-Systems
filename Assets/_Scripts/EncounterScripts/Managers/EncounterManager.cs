@@ -1,4 +1,5 @@
-﻿using _Scripts.EncounterScripts.Encounters;
+﻿using System;
+using _Scripts.EncounterScripts.Encounters;
 using _Scripts.Tiles;
 using UnityEngine;
 
@@ -12,6 +13,11 @@ namespace _Scripts.EncounterScripts.Managers
         private void Awake()
         {
             _tileInfo = EncounterInfo.currentTileInfo;
+        }
+
+        private void Update()
+        {
+            
         }
 
 
