@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using _Scripts.Data;
 using _Scripts.InventorySystem.QuickSlot;
 using _Scripts.TurnSystem;

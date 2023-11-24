@@ -30,8 +30,8 @@ namespace _Scripts.InventorySystem
         private void OnEnable()
         {
             OnCharInvEquip += SetItems;
-            OnCharInvUnequip += SetItems;
         }
+
 
         private void SetItems(EquippableItem item)
         {
@@ -57,7 +57,6 @@ namespace _Scripts.InventorySystem
         private void OnDisable()
         {
             OnCharInvEquip -= SetItems;
-            OnCharInvUnequip -= SetItems;
         }
 
         private void Start()

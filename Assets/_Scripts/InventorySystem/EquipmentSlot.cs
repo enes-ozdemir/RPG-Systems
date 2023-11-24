@@ -39,7 +39,8 @@ namespace _Scripts.InventorySystem
         private void UnEquipItem(Item item)
         {
             equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, null);
-            characterInventory.OnCharInvUnequip.Invoke((EquippableItem)item);
+            
+            //characterInventory.OnCharInvUnequip.Invoke((EquippableItem)item);
         }
 
         private void EquipItem(Item item)

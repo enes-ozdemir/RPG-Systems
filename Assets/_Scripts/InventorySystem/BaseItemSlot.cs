@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.InventorySystem
 {
-    public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,ISaveable
+    public class BaseItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] protected Image image;
         [SerializeField] protected TextMeshProUGUI amountText;
@@ -24,16 +24,6 @@ namespace _Scripts.InventorySystem
         protected Color disabledColor = new Color(1, 1, 1, 0);
         protected Item _item;
 
-        public Task OnSaveAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task OnLoadAsync()
-        {
-            throw new NotImplementedException();
-        }
-        
         public Item Item
         {
             get { return _item; }

@@ -32,6 +32,14 @@ namespace _Scripts
         {
             character.EquipPart(slotCategory, itemName);
             character.Bake();
+
+            if (itemName == null) SetDefaultBgImage();
+
+        }
+
+        private void SetDefaultBgImage()
+        {
+            //todo set default bg image maybe in a scriptable object or just put them one by one as serialized fields
         }
 
         public void EquipItemToQuickSlot()

@@ -16,12 +16,6 @@ namespace _Scripts.InventorySystem.QuickSlot
         public event Action<BaseItemSlot> OnDragEvent;
         public event Action<BaseItemSlot> OnDropEvent;
 
-        public Action OnQuickSlotsChanged;
-        public Action OnQuickSlotChange;
-        public Action<Item[]> OnNewItemsAdded;
-
-        public int slotCount;
-
         private Item[] _itemList;
 
         private void Awake()

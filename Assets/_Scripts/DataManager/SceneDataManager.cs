@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using _Scripts.Data;
 using _Scripts.InventorySystem;
-using Enca.SaveSystem;
 using UnityEngine;
 
 namespace _Scripts
@@ -20,8 +18,6 @@ namespace _Scripts
         }
 
         private void SetQuickSlotItems(Item[] itemArray) => playerData.quickSlotItems = itemArray.ToArray();
-
-
 
         public override async void OnNewSceneLoaded(int obj)
         {
