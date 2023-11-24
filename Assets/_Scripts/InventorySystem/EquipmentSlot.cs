@@ -11,6 +11,12 @@ namespace _Scripts.InventorySystem
         [SerializeField] private PlayerEquipmentController equipmentController;
         [SerializeField] private CharacterInventory characterInventory;
 
+        protected override void OnValidate()
+        {
+            if (image == null)
+                image = GetComponentInChildren<Image>();
+        }
+
         public override bool CanAddStack(Item item, int amount = 1) => false;
 
         public override bool CanReceiveItem(Item item)
@@ -32,9 +38,8 @@ namespace _Scripts.InventorySystem
 
         private void UnEquipItem(Item item)
         {
-            equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, null);    
+            equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, null);
             characterInventory.OnCharInvUnequip.Invoke((EquippableItem)item);
-
         }
 
         private void EquipItem(Item item)
@@ -42,26 +47,14 @@ namespace _Scripts.InventorySystem
             equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, ((EquippableItem)item).part);
             characterInventory.OnCharInvEquip.Invoke((EquippableItem)item);
         }
-        
+
         //equip all items
         public void EquipAllItems(EquippableItem[] equippableItems)
         {
             foreach (var item in equippableItems)
             {
                 equipmentController.onEquipmentChanged.Invoke(SlotCategory.Armor, item.part);
-                
-                
-                
             }
-            
-        }
-        
-        
-
-        protected override void OnValidate()
-        {
-            if (image == null)
-                image = GetComponentInChildren<Image>();
         }
     }
 }
