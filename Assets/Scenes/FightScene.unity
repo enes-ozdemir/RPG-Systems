@@ -2725,7 +2725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPos: {fileID: 518158787}
-  charData: {fileID: 0}
+  charData: {fileID: 11400000, guid: 2319d6d1f2aaed64993b4763e1dc09c2, type: 2}
   originalPos: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 879751642}
   manaBar: {fileID: 338138821}

@@ -16,5 +16,8 @@ namespace _Scripts.DotweenController
             [Header("Move / Bounce")] public Vector3 positionOffset;
             [Header("Scale / Bounce")] public float targetScale;
             [HideInInspector] public Tween tween;
+
+          
+            
         }
 }

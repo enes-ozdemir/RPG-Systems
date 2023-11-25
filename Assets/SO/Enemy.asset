@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626eee1da20d4745b9d94c96e4acdac2, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: 
+  version: 1.0
+  timestamp: 
+  path: 
+  uniqueID: 
+  name: Enemy
+  level: 1
+  stats:
+    health: 122
+    intelligence: 2
+    strength: 2
+    dexterity: 2
+    armor: 22
+    magicResist: 2
+    mana: 2
+  abilities:
+  - {fileID: 11400000, guid: 6d77ffd66c040c543839687d420c7d80, type: 2}
+  - {fileID: 11400000, guid: fdba3dfeae962f747937ac92306b914b, type: 2}

@@ -14,7 +14,20 @@ namespace _Scripts.Data
         public AnimationBehaviour[] animations;
         public bool joinNextSequence = false;
         private Sequence _sequence;
+        public bool shouldRotate = false;
 
+        public void RotateAnimation()
+        {
+            if(!shouldRotate) return;
+            abilityPrefab.transform.localScale = new Vector3(abilityPrefab.transform.localScale.x * -1,
+                abilityPrefab.transform.localScale.y, abilityPrefab.transform.localScale.z);
+
+            // foreach (var animationBehaviour in animations)
+            // {
+            //     animationBehaviour.positionOffset.x *= -1;
+            // }
+        }
+        
         public void MergeSeq(Sequence sequence)
         {
             var new_sequence = DOTween.Sequence();
@@ -24,7 +37,7 @@ namespace _Scripts.Data
 
         public async Task PlayAbilityAnimation(Transform skillTransform, Vector3 targetPos)
         {
-            
+            Debug.Log($"{targetPos} Enes");
             var animationSequenceController = new AnimationSequenceController(skillTransform, targetPos);
             
             if (joinNextSequence)

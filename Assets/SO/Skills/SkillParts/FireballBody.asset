@@ -41,6 +41,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    positionOffset: {x: -3, y: 7, z: 0}
+    positionOffset: {x: 0, y: 7, z: 0}
     targetScale: 0
   joinNextSequence: 0
+  shouldRotate: 1

@@ -11,7 +11,7 @@ namespace _Scripts.Data
         public Transform attackPos;
         public CharData charData;
         private Character _currentTarget;
-        [HideInInspector] public Vector3 originalPos;
+         public Vector3 originalPos;
         [SerializeField] private StatusBar healthBar;
         [SerializeField] private StatusBar manaBar;
 
@@ -21,6 +21,7 @@ namespace _Scripts.Data
         private void OnValidate()
         {
             _animator = GetComponent<Animator>();
+            originalPos = transform.localPosition;
         }
 
         private void Start()
@@ -28,7 +29,6 @@ namespace _Scripts.Data
             _health = charData.stats.health;
             healthBar.SetAmount(_health, charData.stats.health);
             manaBar.SetAmount(_mana, charData.stats.mana);
-            originalPos = transform.position;
         }
 
         public void PlayAnimation(AnimationType animationType, AttackType attackType = AttackType.HighAttack)

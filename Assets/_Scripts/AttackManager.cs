@@ -32,11 +32,11 @@ namespace _Scripts
         private async Task PerformAttackWithMovement(Ability ability)
         {
             var position = _attacker.attackPos.position;
-            _attacker.transform.DOMove(position, 0.3f);
+            _attacker.transform.DOMoveX(position.x, 0.3f);
             await Task.Delay(300);
             await _attacker.Attack(_target, ability);
             await Task.Delay(500);
-            _attacker.transform.DOMove(_attacker.originalPos, 0.3f);
+            _attacker.transform.DOMoveX(_attacker.originalPos.x, 0.3f);
             await Task.Delay(300);
             onAttackEnd?.Invoke();
         }

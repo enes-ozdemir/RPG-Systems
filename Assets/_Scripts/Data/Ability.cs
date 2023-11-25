@@ -20,16 +20,18 @@ namespace _Scripts.Data
 
         public Action<float> onDamageTime;
 
-        private async Task PlayAbilityAnimation(Transform playerTransform, Transform targetTransform)
+        private async Task PlayAbilityAnimation(Transform startTransform, Transform targetTransform)
         {
             Sequence savedSequence = null;
-            var initialPos = playerTransform.position + startOffSet;
+            var initialPos = startTransform.position + startOffSet;
             if (isOnEnemy) initialPos = targetTransform.position + startOffSet;
             for (var i = 0; i < skillParts.Length; i++)
             {
                 CheckIfAnimEnding(i);
 
                 var skillPart = skillParts[i];
+                Vector3 originalScale = skillPart.abilityPrefab.transform.localScale; // Store original scale
+                HandleSkillRotation(startTransform, targetTransform, skillPart);
 
                 var skill = Instantiate(skillPart.abilityPrefab, initialPos, quaternion.identity);
 
@@ -52,6 +54,16 @@ namespace _Scripts.Data
                     skill.gameObject.SetActive(false);
                     //Destroy(skill);
                 }
+                skillPart.abilityPrefab.transform.localScale = originalScale;
+            }
+
+        }
+
+        private void HandleSkillRotation(Transform startTransform, Transform targetTransform, SkillPart skillPart)
+        {
+            {
+                if (startTransform.position.x > targetTransform.position.x)
+                    skillPart.RotateAnimation();
             }
         }
 

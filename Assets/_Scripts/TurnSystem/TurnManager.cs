@@ -41,9 +41,6 @@ namespace _Scripts.TurnSystem
         {
             currentEnemy = enemies[0];
             //_player.charData.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10) );
-            var newEnemy = ScriptableObject.CreateInstance<CharData>();
-            newEnemy.SetCharacter("Enemy", 100, new Stats(100, 10, 10, 10, 10, 10));
-            currentEnemy.SetCharInformation(newEnemy);
             _playerAttackManager = new AttackManager(_player, currentEnemy); //todo next enemye geçince değiş
             _enemyAttackManager = new AttackManager(currentEnemy, _player); //todo next enemye geçince değiş
         }
