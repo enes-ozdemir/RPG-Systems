@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using _Scripts.UI;
+using CharacterCreator2D;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 namespace _Scripts.Data
@@ -11,15 +14,20 @@ namespace _Scripts.Data
         public Transform attackPos;
         public CharData charData;
         private Character _currentTarget;
-         public Vector3 originalPos;
+        public Vector3 originalPos;
         [SerializeField] private StatusBar healthBar;
         [SerializeField] private StatusBar manaBar;
+        [SerializeField] private GameObject hitText;
+        [SerializeField] private Canvas charCanvas;
+        protected CharacterViewer characterViewer;
+
 
         private int _health;
         private int _mana;
 
         private void OnValidate()
         {
+            characterViewer = GetComponent<CharacterViewer>();
             _animator = GetComponent<Animator>();
             originalPos = transform.localPosition;
         }
@@ -27,6 +35,7 @@ namespace _Scripts.Data
         private void Start()
         {
             _health = charData.stats.health;
+            _mana = charData.stats.mana;
             healthBar.SetAmount(_health, charData.stats.health);
             manaBar.SetAmount(_mana, charData.stats.mana);
         }
@@ -86,12 +95,50 @@ namespace _Scripts.Data
             }
         }
 
-        private void TakeDamage(int damage)
+        private void TakeDamage(int damage, HitEffect hitEffect)
         {
             Debug.Log(this.name + " takes " + damage + " damage");
             _health -= damage;
             healthBar.SetAmount(_health, charData.stats.health);
             PlayAnimation(AnimationType.TakeDamage);
+            PlayHitEffect(damage, hitEffect);
+            SetTint(hitEffect.hitEffectColor);
+        }
+
+        private async Task SetTint(Color hitEffectHitEffectColor)
+        {
+            characterViewer.TintColor = hitEffectHitEffectColor;
+            await Task.Delay(200);
+            characterViewer.TintColor = Color.white;
+        }
+
+        private void PlayHitEffect(int damage, HitEffect hitEffect)
+        {
+            var bloodParticlePosition = transform.position + new Vector3(0, 8f, 0);
+            var bloodParticlePrefab =
+                Instantiate(hitEffect.bloodParticlePrefab, bloodParticlePosition, Quaternion.identity);
+            Destroy(bloodParticlePrefab, 1f);
+
+            var damageTextPosition = transform.position + new Vector3(0, 8.4f, 0); // Combined offset
+            var damageTextPrefab = Instantiate(hitText, damageTextPosition, Quaternion.identity, charCanvas.transform);
+
+            Vector3 offset = new Vector3(-2, 2, 0);
+            if (this is Enemy)
+                offset = new Vector3(2, 2, 0);
+
+            HandleDamageText(damage, hitEffect, damageTextPrefab, offset);
+            //todo instantiate hit effects
+        }
+
+        private static void HandleDamageText(int damage, HitEffect hitEffect, GameObject damageTextPrefab,
+            Vector3 offset)
+        {
+            damageTextPrefab.transform.DOMove(damageTextPrefab.transform.position + offset, 0.3f);
+            var component = damageTextPrefab.GetComponent<TextMeshProUGUI>();
+            component.DOFade(0, 1f);
+            component.text = damage.ToString();
+            component.color = hitEffect.hitEffectColor;
+            Destroy(damageTextPrefab.gameObject, 0.3f);
         }
 
         public async Task Attack(Character target, Ability ability)
@@ -103,7 +150,7 @@ namespace _Scripts.Data
 
             if (ability.abilityType is AttackType.HighAttack or AttackType.MiddleAttack or AttackType.LowAttack)
             {
-                CalculateTimeAndDamage(1);
+                CalculateTimeAndDamage(1, ability.hitEffect);
             }
             else
             {
@@ -147,12 +194,12 @@ namespace _Scripts.Data
             // }
         }
 
-        private async void CalculateTimeAndDamage(float lastSkillDuration)
+        private async void CalculateTimeAndDamage(float lastSkillDuration, HitEffect hitEffect)
         {
             var damageTime = (int)lastSkillDuration * 200;
             Debug.Log("Damage time: " + damageTime);
             await Task.Delay(damageTime);
-            _currentTarget.TakeDamage(1);
+            _currentTarget.TakeDamage(1, hitEffect);
         }
 
         public bool IsDead() => charData.stats.health <= 0;

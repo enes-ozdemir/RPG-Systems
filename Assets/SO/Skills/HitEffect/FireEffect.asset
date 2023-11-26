@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6786dbc5a04245d4a2b824f23fd495c3, type: 3}
+  m_Name: FireEffect
+  m_EditorClassIdentifier: 
+  hitTextColor: {r: 0.6603774, g: 0, b: 0, a: 1}
+  hitEffectColor: {r: 0.7735849, g: 0.040138844, b: 0.040138844, a: 1}
+  hitEffectPrefab: []
+  bloodParticlePrefab: {fileID: 7065502504516309355, guid: b17d934862819d3488342a7c35fc67fd, type: 3}

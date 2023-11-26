@@ -16,5 +16,8 @@ MonoBehaviour:
   power: 3
   cooldown: 1
   abilityType: 0
-  abilityPrefab: {fileID: 0}
   abilitySprite: {fileID: 0}
+  startOffSet: {x: 0, y: 0, z: 0}
+  isOnEnemy: 0
+  skillParts: []
+  hitEffect: {fileID: 11400000, guid: 250d6f67a131acf4989cfe77b8e58c4c, type: 2}

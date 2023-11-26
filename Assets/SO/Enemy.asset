@@ -25,7 +25,7 @@ MonoBehaviour:
     dexterity: 2
     armor: 22
     magicResist: 2
-    mana: 2
+    mana: 20
   abilities:
-  - {fileID: 11400000, guid: 6d77ffd66c040c543839687d420c7d80, type: 2}
   - {fileID: 11400000, guid: fdba3dfeae962f747937ac92306b914b, type: 2}
+  - {fileID: 11400000, guid: 6d77ffd66c040c543839687d420c7d80, type: 2}

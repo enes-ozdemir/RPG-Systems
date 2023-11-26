@@ -15,10 +15,10 @@ namespace _Scripts.UI
             mainBar.color = barColor;
         }
 
-        public void SetAmount(int health,int maxHealth)
+        public void SetAmount(int currentAmount, int maxAmount)
         {
-            mainBar.fillAmount = (float)health/maxHealth;
-            barText.text = $"{health} / {maxHealth}";
+            mainBar.fillAmount = (float)currentAmount / maxAmount;
+            barText.text = $"{currentAmount} / {maxAmount}";
         }
     }
 }

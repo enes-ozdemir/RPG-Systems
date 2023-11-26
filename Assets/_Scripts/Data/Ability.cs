@@ -17,8 +17,9 @@ namespace _Scripts.Data
         public Vector3 startOffSet;
         public bool isOnEnemy;
         public SkillPart[] skillParts;
+        public HitEffect hitEffect;
 
-        public Action<float> onDamageTime;
+        public Action<float,HitEffect> onDamageTime;
 
         private async Task PlayAbilityAnimation(Transform startTransform, Transform targetTransform)
         {
@@ -71,7 +72,7 @@ namespace _Scripts.Data
         {
             if (i + 1 == skillParts.Length)
             {
-                onDamageTime?.Invoke(skillParts[i].GetLastAnimationDuration());
+                onDamageTime?.Invoke(skillParts[i].GetLastAnimationDuration(),hitEffect);
             }
         }
 
