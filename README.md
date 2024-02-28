@@ -8,6 +8,8 @@ This untitled game is a turn-based RPG featuring narrative elements, a 2D view, 
 * Drop system
 * Complete map integration
 
+Note: This project uses my utility plugin https://github.com/enes-ozdemir/Enca-Unity-Plugins
+
 ### Gameplay
 ![Animation](https://github.com/enes-ozdemir/2D-RPG/assets/41696219/3d34290d-22a4-4ef1-9417-28a6757294b7)
 ### Screenshots 
