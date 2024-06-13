@@ -1,5 +1,4 @@
-﻿using System;
-using _Scripts.Data;
+﻿using _Scripts.Data;
 using _Scripts.EncounterScripts.Encounters;
 
 namespace _Scripts

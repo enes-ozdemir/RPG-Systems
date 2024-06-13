@@ -15,9 +15,5 @@ namespace _Scripts
             var stats = RpgUtil.GetRandomStatsForItem(playerLevel);
             return new CharacterItem(itemName, itemLevel, stats, part);
         }
-
-     
-        
-        
     }
 }

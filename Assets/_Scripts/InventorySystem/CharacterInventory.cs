@@ -13,7 +13,6 @@ namespace _Scripts.InventorySystem
 
 
         [SerializeField] private Transform itemParent;
-        //todo handle equiped items
 
         public event Action<BaseItemSlot> OnPointerEnterEvent;
         public event Action<BaseItemSlot> OnPointerExitEvent;

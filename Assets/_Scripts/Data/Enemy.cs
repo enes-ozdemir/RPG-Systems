@@ -1,6 +1,4 @@
-﻿using CharacterCreator2D;
-
-namespace _Scripts.Data
+﻿namespace _Scripts.Data
 {
     public class Enemy : Character
     {
