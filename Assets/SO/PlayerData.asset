@@ -18,8 +18,12 @@ MonoBehaviour:
   uniqueID: 04ff9129-d798-4816-8a96-8b8fcbc1ddca
   equipment: []
   quickSlotItems:
+  - {fileID: 11400000, guid: fcc3c505a53d4274480c3128b693ef1d, type: 2}
+  - {fileID: 11400000, guid: b069e8d1b0ad5794fb7d72992e39819d, type: 2}
+  - {fileID: 11400000, guid: fcc3c505a53d4274480c3128b693ef1d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  playerName: 
+  playerLevel: 0
+  playerExperience: 0
+  playerGold: 0

@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace _Scripts
 {
-    public class PlayerEquipmentController : MonoBehaviour
+    public class             
+        PlayerEquipmentController : MonoBehaviour
     {
         [SerializeField] private CharacterViewer character;
         private CharacterData _characterData;

@@ -19,7 +19,7 @@ MonoBehaviour:
   encounterment:
   - encounterType: 1
     chance: 70
-  - encounterType: 2
+  - encounterType: 4
     chance: 15
   - encounterType: 4
     chance: 15

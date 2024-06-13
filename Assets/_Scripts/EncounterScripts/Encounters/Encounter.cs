@@ -1,7 +1,12 @@
-﻿namespace _Scripts.EncounterScripts.Encounters
-{
-    public abstract class Encounter
-    {
-        public abstract void StartEncounter();
-    }
-}
+﻿// using UnityEngine;
+//
+// namespace _Scripts.EncounterScripts.Encounters
+// {
+//     
+//     [CreateAssetMenu(fileName = "New Monster", menuName = "Monsters/Monster")]
+//     public class Encounter : ScriptableObject
+//     {
+//         public string encounterName;
+//         public 
+//     }
+// }

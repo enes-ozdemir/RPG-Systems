@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using _Scripts.Data;
+using _Scripts.EncounterScripts.Encounters;
 using Enca.SaveSystem;
 using UnityEngine;
 
@@ -9,17 +11,24 @@ namespace _Scripts
     {
         public PlayerData playerData;
 
-        public async Task OnSaveAsync() => await SaveLoadUtility.SaveAsync(playerData);
+        public Action OnSaveCompleted;
+        public Action OnLoadCompleted;
+        
+        public async Task OnSaveAsync()
+        {
+            await SaveLoadUtility.SaveAsync(playerData);
+            OnSaveCompleted?.Invoke();
+        }
 
-        public async Task OnLoadAsync() => await SaveLoadUtility.LoadAsync(playerData);
+        public async Task OnLoadAsync()
+        {
+            await SaveLoadUtility.LoadAsync(playerData);
+            OnLoadCompleted?.Invoke();
+        }
 
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-        }
-
-        private void OnEnable()
-        {
             SceneController.onNewSceneLoaded += OnNewSceneLoaded;
         }
 
@@ -33,5 +42,6 @@ namespace _Scripts
         {
             await OnSaveAsync();
         }
+       
     }
 }

@@ -15,13 +15,9 @@ MonoBehaviour:
   id: 03cf62b2a6fcb724eb7aa75fe1e300ea
   maximumStacks: 1
   itemName: 
-  icon: {fileID: 21300000, guid: ca18ec3282aa1a443984b09023badff3, type: 3}
+  icon: {fileID: 21300000, guid: 8804934c9fd9a1642a2fa7e207648db6, type: 3}
   value: 0
-  holdingAnim: 
   equipmentType: 0
   level: 0
-  itemPrefab: {fileID: 0}
   particleSystem: {fileID: 0}
   part: {fileID: 11400000, guid: de3fe4131bd239d4fa06aa88cccabaa5, type: 2}
-  coordinates: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}

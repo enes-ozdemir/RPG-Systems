@@ -41,12 +41,13 @@ namespace _Scripts.TurnSystem
         {
             currentEnemy = enemies[0];
             //_player.charData.SetCharacter("Player", 100, new Stats(100, 10, 10, 10, 10, 10) );
-            _playerAttackManager = new AttackManager(_player, currentEnemy); //todo next enemye geçince değiş
-            _enemyAttackManager = new AttackManager(currentEnemy, _player); //todo next enemye geçince değiş
+        
         }
 
         private void Start()
         {
+            _playerAttackManager = new AttackManager(_player, currentEnemy); //todo next enemye geçince değiş
+            _enemyAttackManager = new AttackManager(currentEnemy, _player); //todo next enemye geçince değiş
             _player.PlayAnimation(AnimationType.Idle);
             currentEnemy.PlayAnimation(AnimationType.Idle);
 

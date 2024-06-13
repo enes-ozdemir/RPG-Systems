@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using _Scripts.EncounterScripts.Encounters;
+using _Scripts.EncounterScripts.Managers;
 using _Scripts.Tiles;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 namespace _Scripts.MapScripts
@@ -14,6 +12,7 @@ namespace _Scripts.MapScripts
     {
         public Tilemap[] tiles; // Assign the Ground Tilemap component
         public TileInfo[] tileInfos;
+        public EncounterManager encounterManager;
 
         [CanBeNull] public static TileInfo currentTile; //todo this will change cant be null
 
@@ -44,8 +43,8 @@ namespace _Scripts.MapScripts
 
         private void LookAround()
         {
-            EncounterInfo.currentTileInfo = currentTile;
-            SceneController.LoadScene(0);
+            SetCurrentGrid();
+            encounterManager.StartEncounter(currentTile);
         }
 
         private void SetCurrentGrid()

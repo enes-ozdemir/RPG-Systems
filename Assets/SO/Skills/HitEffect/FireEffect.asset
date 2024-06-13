@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6786dbc5a04245d4a2b824f23fd495c3, type: 3}
   m_Name: FireEffect
   m_EditorClassIdentifier: 
-  hitTextColor: {r: 0.6603774, g: 0, b: 0, a: 1}
-  hitEffectColor: {r: 0.7735849, g: 0.040138844, b: 0.040138844, a: 1}
+  hitTextColor: {r: 0.7735849, g: 0.29956794, b: 0, a: 1}
+  hitEffectColor: {r: 0.5377358, g: 0.1632243, b: 0.0076094554, a: 1}
   hitEffectPrefab: []
-  bloodParticlePrefab: {fileID: 7065502504516309355, guid: b17d934862819d3488342a7c35fc67fd, type: 3}
+  bloodParticlePrefab: {fileID: 8988745506037187277, guid: b412ee02750c3ff4b8e8de9b3aeadcd7, type: 3}

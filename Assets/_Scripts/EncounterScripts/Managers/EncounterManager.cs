@@ -1,5 +1,4 @@
 ﻿using System;
-using _Scripts.EncounterScripts.Encounters;
 using _Scripts.Tiles;
 using UnityEngine;
 
@@ -7,47 +6,24 @@ namespace _Scripts.EncounterScripts.Managers
 {
     public class EncounterManager : MonoBehaviour
     {
-        private TileInfo _tileInfo;
-
-
-        private void Awake()
+        public void StartEncounter(TileInfo currentTile)
         {
-            _tileInfo = EncounterInfo.currentTileInfo;
-        }
-
-        private void Update()
-        {
+            var encounterType = currentTile.GetRandomEncounterType();
             
-        }
-
-
-        private void Start()
-        {
-            if (_tileInfo == null)
+            switch (encounterType)
             {
-                //    throw new Exception("TileInfo is null");
+                case EncounterType.Chest:
+                    SceneController.LoadScene(2);
+                    break;
+                case EncounterType.Fight:
+                    Debug.Log("Fight scene");
+                    SceneController.LoadScene(1);
+                    break;
+                case EncounterType.Town:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-//            var encounterType = _tileInfo.GetRandomEncounterType();
-
-            // switch (encounterType)
-            // {
-            //     case EncounterType.Chest:
-            //        // var chestEncounter = gameObject.AddComponent<ChestEncounter>();
-            //        
-            //         chestEncounter.StartEncounter();
-            //         break;
-            //     case EncounterType.Fight:
-            //       //  var enemyEncounter = gameObject.AddComponent<EnemyEncounter>();
-            //         enemyEncounter.StartEncounter();
-            //         break;
-            //     case EncounterType.Town:
-            //        // var townEncounter = gameObject.AddComponent<TownEncounter>();
-            //         townEncounter.StartEncounter();
-            //         break;
-            //     default:
-            //         throw new ArgumentOutOfRangeException();
-            // }
         }
     }
 }
